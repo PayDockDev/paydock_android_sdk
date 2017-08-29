@@ -7,6 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.paydock.androidsdk.IGetToken;
+import com.paydock.androidsdk.IPaymentSourceResponse;
+import com.paydock.androidsdk.Models.PaymentSourceResponse;
+import com.paydock.androidsdk.Models.TokenCardResponse;
+import com.paydock.androidsdk.View.CreditCardInputForm;
+import com.paydock.androidsdk.View.DirectDebitInputForm;
+import com.paydock.androidsdk.View.VaultedPaymentSourcesInputForm;
 import com.paydock.javasdk.Models.ChargeRequest;
 import com.paydock.javasdk.Models.ChargeResponse;
 import com.paydock.javasdk.Models.Customer;
@@ -14,15 +21,6 @@ import com.paydock.javasdk.Models.PaymentSource;
 import com.paydock.javasdk.Services.Environment;
 
 import java.math.BigDecimal;
-
-import androidsdk.IGetToken;
-import androidsdk.IPaymentSourceResponse;
-import androidsdk.Models.PaymentSourceResponse;
-import androidsdk.Models.TokenCardResponse;
-import androidsdk.View.CreditCardInputForm;
-import androidsdk.View.DirectDebitInputForm;
-import androidsdk.View.VaultedPaymentSourcesInputForm;
-
 
 public class MainActivity extends Activity implements IGetToken, IPaymentSourceResponse {
 
