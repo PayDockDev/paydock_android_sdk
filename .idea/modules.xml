@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PayDockAndroidSDK.iml" filepath="$PROJECT_DIR$/PayDockAndroidSDK.iml" />
+      <module fileurl="file://$PROJECT_DIR$/androidsdk/androidsdk.iml" filepath="$PROJECT_DIR$/androidsdk/androidsdk.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
