@@ -36,7 +36,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
     compile 'com.android.support:design:26.0.0-alpha1'
-    compile 'com.paydock:javasdk:1.0.3'
+    compile 'com.paydock:javasdk:1.0.4'
 }
 
 ext {
@@ -52,7 +52,7 @@ ext {
     siteUrl = 'https://www.paydock.com'
     gitUrl = 'https://github.com/PayDockDev/paydock_android_sdk'
 
-    libraryVersion = '0.9.6'
+    libraryVersion = '0.9.7'
 
     developerId = ''
     developerName = 'Mark Cardamis'
