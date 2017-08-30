@@ -1,5 +1,5 @@
 
-package androidsdk.Models;
+package com.paydock.androidsdk.Models;
 
 import com.paydock.javasdk.Models.Response;
 

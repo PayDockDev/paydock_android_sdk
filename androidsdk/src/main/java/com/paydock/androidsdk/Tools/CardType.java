@@ -1,4 +1,4 @@
-package androidsdk.Tools;
+package com.paydock.androidsdk.Tools;
 
 import com.paydock.androidsdk.R;
 

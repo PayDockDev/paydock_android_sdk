@@ -1,15 +1,14 @@
-package androidsdk;
+package com.paydock.androidsdk;
 
 import android.os.AsyncTask;
 
+import com.paydock.androidsdk.Models.TokenCardResponse;
 import com.paydock.javasdk.Models.ResponseException;
 import com.paydock.javasdk.Models.TokenRequest;
 import com.paydock.javasdk.Models.TokenResponse;
 import com.paydock.javasdk.Services.Config;
 import com.paydock.javasdk.Services.Environment;
 import com.paydock.javasdk.Services.Tokens;
-
-import androidsdk.Models.TokenCardResponse;
 
 public class GetToken extends AsyncTask<TokenRequest, Void, TokenCardResponse>{
 

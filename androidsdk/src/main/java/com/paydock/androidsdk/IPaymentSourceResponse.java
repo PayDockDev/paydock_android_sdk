@@ -1,6 +1,6 @@
-package androidsdk;
+package com.paydock.androidsdk;
 
-import androidsdk.Models.PaymentSourceResponse;
+import com.paydock.androidsdk.Models.PaymentSourceResponse;
 
 public interface IPaymentSourceResponse {
     void paymentSourceResponseCallback(PaymentSourceResponse output);

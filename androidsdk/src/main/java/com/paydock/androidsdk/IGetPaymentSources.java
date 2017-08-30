@@ -1,4 +1,4 @@
-package androidsdk;
+package com.paydock.androidsdk;
 
 import com.paydock.javasdk.Models.CustomerPaymentSourceSearchResponse;
 

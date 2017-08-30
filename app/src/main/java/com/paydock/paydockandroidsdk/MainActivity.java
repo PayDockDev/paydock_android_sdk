@@ -118,13 +118,12 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
         charge.currency ="AUD";
         charge.amount =new BigDecimal(10);
         charge.reference = "Charge reference";
+        charge.description = "Charge description";
         if (mToken != null) {
             charge.token = mToken;
         } else if (mCustomerId != null){
             charge.customer_id = mCustomerId;
-            Customer customer = new Customer();
-            customer.payment_source_id = mPaymentSourceId;
-            charge.customer = customer;
+            charge.payment_source_id = mPaymentSourceId;
         }
         else {
             Customer customer = new Customer();

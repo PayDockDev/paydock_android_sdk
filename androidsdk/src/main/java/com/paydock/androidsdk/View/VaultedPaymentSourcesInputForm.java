@@ -1,4 +1,4 @@
-package androidsdk.View;
+package com.paydock.androidsdk.View;
 
 import android.content.Context;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -8,6 +8,10 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.paydock.androidsdk.GetPaymentSources;
+import com.paydock.androidsdk.IGetPaymentSources;
+import com.paydock.androidsdk.IPaymentSourceResponse;
+import com.paydock.androidsdk.Models.PaymentSourceResponse;
 import com.paydock.androidsdk.R;
 import com.paydock.javasdk.Models.CustomerPaymentSourceSearchRequest;
 import com.paydock.javasdk.Models.CustomerPaymentSourceSearchResponse;
@@ -15,11 +19,6 @@ import com.paydock.javasdk.Services.Environment;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidsdk.GetPaymentSources;
-import androidsdk.IGetPaymentSources;
-import androidsdk.IPaymentSourceResponse;
-import androidsdk.Models.PaymentSourceResponse;
 
 @SuppressWarnings({"Convert2Lambda", "SameParameterValue"})
 public class VaultedPaymentSourcesInputForm extends LinearLayout implements IVaultedPaymentSourcesInputForm{

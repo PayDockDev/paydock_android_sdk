@@ -1,4 +1,4 @@
-package androidsdk;
+package com.paydock.androidsdk;
 
 import android.os.AsyncTask;
 
@@ -11,7 +11,6 @@ import com.paydock.javasdk.Services.Environment;
 
 
 public class GetPaymentSources extends AsyncTask<CustomerPaymentSourceSearchRequest, Void, CustomerPaymentSourceSearchResponse>{
-
 
     private Environment mEnvironment = Environment.Sandbox;
     private IGetPaymentSources mDelegate = null;

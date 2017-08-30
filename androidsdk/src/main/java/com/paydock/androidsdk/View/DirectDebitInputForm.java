@@ -1,4 +1,4 @@
-package androidsdk.View;
+package com.paydock.androidsdk.View;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -16,9 +16,9 @@ import com.paydock.javasdk.Models.PaymentType;
 import com.paydock.javasdk.Models.TokenRequest;
 import com.paydock.javasdk.Services.Environment;
 
-import androidsdk.GetToken;
-import androidsdk.IGetToken;
-import androidsdk.Models.TokenCardResponse;
+import com.paydock.androidsdk.GetToken;
+import com.paydock.androidsdk.IGetToken;
+import com.paydock.androidsdk.Models.TokenCardResponse;
 
 @SuppressWarnings({"Convert2Lambda", "SameParameterValue"})
 public class DirectDebitInputForm extends LinearLayout implements IDirectDebitInputForm {

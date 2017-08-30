@@ -1,8 +1,8 @@
-package androidsdk.View;
+package com.paydock.androidsdk.View;
 
 import com.paydock.javasdk.Services.Environment;
 
-import androidsdk.IGetToken;
+import com.paydock.androidsdk.IGetToken;
 
 public interface ICreditCardInputForm {
 

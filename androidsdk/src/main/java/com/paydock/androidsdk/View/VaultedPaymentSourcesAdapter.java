@@ -1,4 +1,4 @@
-package androidsdk.View;
+package com.paydock.androidsdk.View;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,12 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.paydock.androidsdk.IPaymentSourceResponse;
+import com.paydock.androidsdk.Models.PaymentSourceResponse;
 import com.paydock.androidsdk.R;
 
 import java.util.List;
-
-import androidsdk.IPaymentSourceResponse;
-import androidsdk.Models.PaymentSourceResponse;
 
 public class VaultedPaymentSourcesAdapter extends RecyclerView.Adapter<VaultedPaymentSourcesAdapter.MyViewHolder> {
     private List<PaymentSourceResponse> mVaultedPaymentsSources;

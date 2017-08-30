@@ -1,4 +1,4 @@
-package androidsdk.View;
+package com.paydock.androidsdk.View;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;

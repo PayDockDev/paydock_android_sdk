@@ -9,8 +9,6 @@ import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import androidsdk.Tools.CardType;
-
 @RunWith(Enclosed.class)
 public class CardTypeTest {
 
