@@ -23,9 +23,13 @@ public class PaymentSourceResponse extends Response
         public String card_scheme;
         public String account_name;
         public String account_number;
+        public String checkout_holder;
+        public String checkout_email;
         public String type;
         public String gateway_id;
         public String customer_id;
+        public String gateway_type;
+        public String gateway_mode;
         public Boolean primary;
         public String customer_reference;
     }

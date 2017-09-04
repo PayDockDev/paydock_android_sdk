@@ -9,6 +9,12 @@
 
 
         <ImageView
+            android:id="@+id/ivTick"
+            style="@style/btn_tick_icon"
+            android:src="@drawable/ic_tick"
+            tools:ignore="ContentDescription"/>
+
+        <ImageView
             android:id="@+id/ivIcon"
             style="@style/btn_form_icon"
             android:src="@drawable/ic_default"

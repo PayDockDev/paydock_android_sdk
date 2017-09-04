@@ -4,6 +4,7 @@
 
     <dimen name="btn_container_layout_height">65dp</dimen>
     <dimen name="btn_icon_layout_width">70dp</dimen>
+    <dimen name="btn_tick_layout_width">35dp</dimen>
     <dimen name="btn_icon_right_margin">8dp</dimen>
     <dimen name="btn_input_text_size">16sp</dimen>
     <dimen name="btn_input_error_text_size">12sp</dimen>

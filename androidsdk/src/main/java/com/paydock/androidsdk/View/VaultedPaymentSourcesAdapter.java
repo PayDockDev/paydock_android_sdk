@@ -15,16 +15,16 @@ import java.util.List;
 
 public class VaultedPaymentSourcesAdapter extends RecyclerView.Adapter<VaultedPaymentSourcesAdapter.MyViewHolder> {
     private List<PaymentSourceResponse> mVaultedPaymentsSources;
-    private int selectedPosition = -1;
+    private int mSelectedPosition = -1;
     private IPaymentSourceResponse mDelegate;
 
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public ImageView mIcon;
+        public ImageView mIcon, mTick;
         public TextView mName, mLast4;
 
         public MyViewHolder(View view) {
             super(view);
+            mTick = view.findViewById(R.id.ivTick);
             mIcon = view.findViewById(R.id.ivIcon);
             mName = view.findViewById(R.id.tvName);
             mLast4 = view.findViewById(R.id.tvLast4);
@@ -48,58 +48,65 @@ public class VaultedPaymentSourcesAdapter extends RecyclerView.Adapter<VaultedPa
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         PaymentSourceResponse tokenCardResponse = mVaultedPaymentsSources.get(position);
-        if(selectedPosition==position)
-            holder.itemView.setPadding(40,0,0,0);
-        else
-            holder.itemView.setPadding(0,0,0,0);
-
+        if(mSelectedPosition==position) {
+            holder.mTick.setVisibility(View.VISIBLE);
+        } else {
+            holder.mTick.setVisibility(View.GONE);
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedPosition=holder.getAdapterPosition();
-                mDelegate.paymentSourceResponseCallback(mVaultedPaymentsSources.get(selectedPosition));
+                mSelectedPosition=holder.getAdapterPosition();
+                mDelegate.paymentSourceResponseCallback(mVaultedPaymentsSources.get(mSelectedPosition));
                 notifyDataSetChanged();
 
             }
         });
 
-        if (tokenCardResponse.resource.data.type.equals("bsb")){
-            holder.mIcon.setImageResource(R.drawable.ic_bank);
-        }else if (tokenCardResponse.resource.data.type.equals("card")){
-            switch (tokenCardResponse.resource.data.card_scheme){
-                case ("visa"):
-                    holder.mIcon.setImageResource(R.drawable.ic_visa);
-                    break;
-                case ("mastercard"):
-                    holder.mIcon.setImageResource(R.drawable.ic_mastercard);
-                    break;
-                case ("amex"):
-                    holder.mIcon.setImageResource(R.drawable.ic_amex);
-                    break;
-                case ("diners"):
-                    holder.mIcon.setImageResource(R.drawable.ic_diners);
-                    break;
-                case ("cup"):
-                    holder.mIcon.setImageResource(R.drawable.ic_cup);
-                    break;
-                default: holder.mIcon.setImageResource(R.drawable.ic_default);
-            }
-        }else if (tokenCardResponse.resource.data.type.equals("paypal")){
-            holder.mIcon.setImageResource(R.drawable.ic_default);
+        switch (tokenCardResponse.resource.data.type){
+            case ("bsb"):
+                holder.mIcon.setImageResource(R.drawable.ic_bank);
+                holder.mName.setText(tokenCardResponse.resource.data.account_number);
+                holder.mLast4.setText(tokenCardResponse.resource.data.account_name);
+                break;
+            case ("card"):
+                switch (tokenCardResponse.resource.data.card_scheme){
+                    case ("visa"):
+                        holder.mIcon.setImageResource(R.drawable.ic_visa);
+                        break;
+                    case ("mastercard"):
+                        holder.mIcon.setImageResource(R.drawable.ic_mastercard);
+                        break;
+                    case ("amex"):
+                        holder.mIcon.setImageResource(R.drawable.ic_amex);
+                        break;
+                    case ("diners"):
+                        holder.mIcon.setImageResource(R.drawable.ic_diners);
+                        break;
+                    case ("cup"):
+                        holder.mIcon.setImageResource(R.drawable.ic_cup);
+                        break;
+                    default: holder.mIcon.setImageResource(R.drawable.ic_default);
+                }
+                holder.mName.setText("****");
+                holder.mLast4.setText(tokenCardResponse.resource.data.card_number_last4);
+                break;
+            case ("checkout"):
+                holder.mIcon.setImageResource(R.drawable.ic_paypal);
+                holder.mName.setText(tokenCardResponse.resource.data.checkout_email);
+                holder.mLast4.setText(tokenCardResponse.resource.data.checkout_holder);
+                break;
         }
-
-        holder.mName.setText((tokenCardResponse.resource.data.type.equals("bsb")) ?
-                tokenCardResponse.resource.data.account_name :
-                tokenCardResponse.resource.data._id);
-        holder.mLast4.setText((tokenCardResponse.resource.data.type.equals("bsb")) ?
-                tokenCardResponse.resource.data.account_number :
-                tokenCardResponse.resource.data.card_number_last4);
 
     }
 
     @Override
     public int getItemCount() {
         return mVaultedPaymentsSources.size();
+    }
+
+    public void setSelectedPosition(int selectedPosition){
+        mSelectedPosition = selectedPosition;
     }
 
 }

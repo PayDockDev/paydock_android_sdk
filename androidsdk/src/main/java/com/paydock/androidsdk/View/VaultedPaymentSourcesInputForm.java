@@ -96,25 +96,40 @@ public class VaultedPaymentSourcesInputForm extends LinearLayout implements IVau
                                 PaymentSourceResponse response = new PaymentSourceResponse();
                                 if (output.resource.data[i]._id != null)
                                     response.resource.data._id = output.resource.data[i]._id;
+                                if (output.resource.data[i].card_number_last4 != null)
+                                    response.resource.data.card_number_last4 = output.resource.data[i].card_number_last4;
+                                if (output.resource.data[i].card_scheme != null)
+                                    response.resource.data.card_scheme = output.resource.data[i].card_scheme;
                                 if (output.resource.data[i].account_name != null)
                                     response.resource.data.account_name = output.resource.data[i].account_name;
                                 if (output.resource.data[i].account_number != null)
                                     response.resource.data.account_number = output.resource.data[i].account_number;
-                                if (output.resource.data[i].gateway_id != null)
-                                    response.resource.data.gateway_id = output.resource.data[i].gateway_id;
-                                if (output.resource.data[i].card_scheme != null)
-                                    response.resource.data.card_scheme = output.resource.data[i].card_scheme;
-                                if (output.resource.data[i].card_number_last4 != null)
-                                    response.resource.data.card_number_last4 = output.resource.data[i].card_number_last4;
+                                if (output.resource.data[i].checkout_holder != null)
+                                    response.resource.data.checkout_holder = output.resource.data[i].checkout_holder;
+                                if (output.resource.data[i].checkout_email != null)
+                                    response.resource.data.checkout_email = output.resource.data[i].checkout_email;
                                 if (output.resource.data[i].type != null)
                                     response.resource.data.type = output.resource.data[i].type;
-                                if (output.resource.data[i].primary != null)
-                                    response.resource.data.primary = output.resource.data[i].primary;
+                                if (output.resource.data[i].gateway_id != null)
+                                    response.resource.data.gateway_id = output.resource.data[i].gateway_id;
                                 if (output.resource.data[i].customer_id != null)
                                     response.resource.data.customer_id = output.resource.data[i].customer_id;
+                                if (output.resource.data[i].gateway_type != null)
+                                    response.resource.data.gateway_type = output.resource.data[i].gateway_type;
+                                if (output.resource.data[i].gateway_mode != null)
+                                    response.resource.data.gateway_mode = output.resource.data[i].gateway_mode;
+                                if (output.resource.data[i].primary != null)
+                                    response.resource.data.primary = output.resource.data[i].primary;
                                 if (output.resource.data[i].customer_reference != null)
                                     response.resource.data.customer_reference = output.resource.data[i].customer_reference;
-                                tokensList.add(response);
+
+                                    if (response.resource.data.primary){
+                                        tokensList.add(0,response);
+                                        mDelegate.paymentSourceResponseCallback(response);
+                                        mAdapter.setSelectedPosition(0);
+                                    } else {
+                                        tokensList.add(response);
+                                    }
                                 }
                             } else {
                             PaymentSourceResponse response = new PaymentSourceResponse();

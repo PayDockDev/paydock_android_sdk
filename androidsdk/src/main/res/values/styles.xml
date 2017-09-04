@@ -35,6 +35,14 @@
         <item name="android:paddingRight">@dimen/btn_icon_right_margin</item>
     </style>
 
+    <style name="btn_tick_icon">
+        <item name="android:layout_width">@dimen/btn_tick_layout_width</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">top|center_horizontal</item>
+        <item name="android:paddingBottom">@dimen/btn_margin</item>
+        <item name="android:paddingRight">@dimen/btn_icon_right_margin</item>
+    </style>
+
     <style name="btn_text_input_layout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -46,6 +54,15 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:paddingTop">@dimen/btn_margin</item>
         <item name="android:textColorHint">@color/color_light_gray</item>
+    </style>
+
+    <style name="btn_payment_sources_layout">
+        <item name="android:textSize">@dimen/btn_input_text_size</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:paddingTop">@dimen/btn_margin</item>
+        <item name="android:paddingLeft">@dimen/btn_margin</item>
     </style>
 
 </resources>
