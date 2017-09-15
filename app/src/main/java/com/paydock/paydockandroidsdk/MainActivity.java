@@ -1,11 +1,13 @@
 package com.paydock.paydockandroidsdk;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.paydock.androidsdk.IGetToken;
 import com.paydock.androidsdk.IPaymentSourceResponse;
@@ -16,22 +18,28 @@ import com.paydock.androidsdk.View.DirectDebitInputForm;
 import com.paydock.androidsdk.View.VaultedPaymentSourcesInputForm;
 import com.paydock.javasdk.Models.ChargeRequest;
 import com.paydock.javasdk.Models.ChargeResponse;
-import com.paydock.javasdk.Models.Customer;
-import com.paydock.javasdk.Models.PaymentSource;
 import com.paydock.javasdk.Services.Environment;
 
 import java.math.BigDecimal;
 
 public class MainActivity extends Activity implements IGetToken, IPaymentSourceResponse {
 
-    public static final String TAG = "MainActivity";
+    public static final String sPublicKey = "8b2dad5fcf18f6f504685a46af0df82216781f3b";
+    public static final String sPrivateKey = "c3de8f40ebbfff0fb74c11154274c080dfb8e3f9";
+    public static final String sCreditCardGatewayID = "58b60d8a6da7e425d6e4f6c7";
+    public static final String sBankGatewayID = "58bf7dd43c541b5b87f741df";
+    public static final String sQueryString = "eyJhbGciOiJIUzI1NiIsInR5cC" +
+            "I6IkpXVCJ9.eyJpZCI6IjU4YjY0Y2UzNmRhN2U0MjVkNmU0ZjcwNSIsImxpbWl" +
+            "0IjpudWxsLCJza2lwIjpudWxsLCJpYXQiOjE1MDMzMTg2NzV9.U6ziYMwuviOWY" +
+            "vAtp_16dwE4HDXRGVOOvdkUnhtEALE";
 
-    Button bAddCharge, bGetToken, bClearText;
-    EditText editText, editText2, editText3, editText4, editText5, editText6;
+    Button bCreditCard, bBank, bVault, bAddCharge;
 
     CreditCardInputForm mCreditCardInputForm;
     DirectDebitInputForm mDirectDebitInputForm;
     VaultedPaymentSourcesInputForm mVaultedPaymentSourcesInputForm;
+
+    private RelativeLayout pbLoadingPanel;
 
     String mToken = null;
     String mCustomerId = null;
@@ -42,106 +50,66 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d(TAG, "onCreate Bundle called", new Exception());
-
+        bCreditCard = findViewById(R.id.bCreditCard);
+        bBank = findViewById(R.id.bBank);
+        bVault = findViewById(R.id.bVault);
         bAddCharge = findViewById(R.id.bAddCharge);
-        bGetToken = findViewById(R.id.bGetToken);
-        bClearText = findViewById(R.id.bClearText);
-        editText = findViewById(R.id.editText);
-        editText2 = findViewById(R.id.editText2);
-        editText3 = findViewById(R.id.editText3);
-        editText4 = findViewById(R.id.editText4);
-        editText5 = findViewById(R.id.editText5);
-        editText6 = findViewById(R.id.editText6);
         mCreditCardInputForm = findViewById(R.id.creditCardInputForm);
         mDirectDebitInputForm = findViewById(R.id.directDebitInputForm);
         mVaultedPaymentSourcesInputForm = findViewById(R.id.vaultedPaymentsSourcesInputForm);
+        pbLoadingPanel = findViewById(R.id.pbLoadingPanel);
 
-        mCreditCardInputForm.setVisibility(View.GONE);
+        mCreditCardInputForm.setVisibility(View.VISIBLE);
         mDirectDebitInputForm.setVisibility(View.GONE);
-        mVaultedPaymentSourcesInputForm.setVisibility(View.VISIBLE);
+        mVaultedPaymentSourcesInputForm.setVisibility(View.GONE);
 
-        bAddCharge.setOnClickListener(v -> new AddCharge(output -> {
-            ChargeResponse ch = output;
-            if (ch.resource != null) {
-                editText.setText(ch.resource.data.customer.first_name);
-                editText2.setText(ch.resource.data.customer.last_name);
-                editText3.setText(ch.resource.data.customer.email);
-                editText4.setText(ch.resource.data.reference);
-                editText5.setText(ch.resource.data.amount.toString());
-                editText6.setText(ch.resource.data.status);
-            } else if (ch.error != null) {
-                editText.setText(ch.error.http_status_code.toString());
-                editText2.setText(ch.error.message);
-                editText3.setText(ch.error.jsonResponse);
-            }
-        }).execute(createCharge()));
+        bCreditCard.setOnClickListener(v -> {
+            mCreditCardInputForm.setVisibility(View.VISIBLE);
+            mDirectDebitInputForm.setVisibility(View.GONE);
+            mVaultedPaymentSourcesInputForm.setVisibility(View.GONE);
+        });
 
+        bBank.setOnClickListener(v -> {
+            mCreditCardInputForm.setVisibility(View.GONE);
+            mDirectDebitInputForm.setVisibility(View.VISIBLE);
+            mVaultedPaymentSourcesInputForm.setVisibility(View.GONE);
+        });
 
-
-        bClearText.setOnClickListener(v -> {
-            if (mCreditCardInputForm.getVisibility() == View.VISIBLE) {
-                mCreditCardInputForm.clear();
-            } else if (mDirectDebitInputForm.getVisibility() == View.VISIBLE) {
-                mDirectDebitInputForm.clear();
+        bVault.setOnClickListener(v -> {
+            mCreditCardInputForm.setVisibility(View.GONE);
+            mDirectDebitInputForm.setVisibility(View.GONE);
+            if (mVaultedPaymentSourcesInputForm.getVisibility() == View.GONE){
+                mVaultedPaymentSourcesInputForm.setVisibility(View.VISIBLE);
+                mVaultedPaymentSourcesInputForm.getVaultedPaymentSources(Environment.Sandbox,
+                        sPublicKey, sQueryString, this);
             }
 
-        });//
+        });
 
 
-        bGetToken.setOnClickListener(v -> {
+        bAddCharge.setOnClickListener(v -> {
             try {
+                if (v != null) { // Hide the soft keyboard
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
                 if (mCreditCardInputForm.getVisibility() == View.VISIBLE) {
-                    mCreditCardInputForm.getToken(Environment.Sandbox,
-                            "8b2dad5fcf18f6f504685a46af0df82216781f3b", "58b60d8a6da7e425d6e4f6c7", this);
+                    pbLoadingPanel.setVisibility(View.VISIBLE);
+                    mCreditCardInputForm.getToken(Environment.Sandbox, sPublicKey, sCreditCardGatewayID, this);
                 } else if (mDirectDebitInputForm.getVisibility() == View.VISIBLE) {
+                    pbLoadingPanel.setVisibility(View.VISIBLE);
                     mDirectDebitInputForm.getToken(Environment.Sandbox,
-                            "8b2dad5fcf18f6f504685a46af0df82216781f3b", "58bf7dd43c541b5b87f741df", this);
+                            sPublicKey, sBankGatewayID, this);
                 } else if (mVaultedPaymentSourcesInputForm.getVisibility() == View.VISIBLE){
-                    mVaultedPaymentSourcesInputForm.getVaultedPaymentSources(Environment.Sandbox,
-                            "8b2dad5fcf18f6f504685a46af0df82216781f3b", "eyJhbGciOiJIUzI1NiIsInR5cC" +
-                                    "I6IkpXVCJ9.eyJpZCI6IjU4YjY0Y2UzNmRhN2U0MjVkNmU0ZjcwNSIsImxpbWl" +
-                                    "0IjpudWxsLCJza2lwIjpudWxsLCJpYXQiOjE1MDMzMTg2NzV9.U6ziYMwuviOWY" +
-                                    "vAtp_16dwE4HDXRGVOOvdkUnhtEALE", this);
+                    pbLoadingPanel.setVisibility(View.VISIBLE);
+                    new AddCharge(this::displayPopup).execute(createCharge());
                 }
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         });
 
-    }
-
-    public ChargeRequest createCharge() {
-        ChargeRequest charge = new ChargeRequest();
-        charge.currency ="AUD";
-        charge.amount =new BigDecimal(10);
-        charge.reference = "Charge reference";
-        charge.description = "Charge description";
-        if (mToken != null) {
-            charge.token = mToken;
-        } else if (mCustomerId != null){
-            charge.customer_id = mCustomerId;
-            charge.payment_source_id = mPaymentSourceId;
-        }
-        else {
-            Customer customer = new Customer();
-            customer.first_name = "Justin";
-            customer.last_name = "Timberlake";
-            customer.email = "test@email.com";
-            PaymentSource payment_source = new PaymentSource();
-            payment_source.gateway_id = "58b60d8a6da7e425d6e4f6c7";
-            payment_source.card_name = "Test Name";
-            payment_source.card_number = "4111111111111111";
-            payment_source.expire_month = "10";
-            payment_source.expire_year = "2020";
-            payment_source.card_ccv = "123";
-            customer.payment_source = payment_source;
-            charge.customer = customer;
-        }
-
-        return charge;
     }
 
     //TODO: Handle Exceptions in Async callback
@@ -150,21 +118,7 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
     public void tokenCallback(TokenCardResponse output){
         try {
             mToken = output.data;
-            new AddCharge(output1 -> {
-                ChargeResponse ch = output1;
-                if (ch.resource != null) {
-                    editText.setText(ch.resource.data._id);
-                    editText2.setText(ch.resource.data.amount.toString());
-                    editText3.setText(ch.resource.data.external_id);
-                    editText4.setText(ch.resource.data.reference);
-                    editText5.setText(ch.resource.data.amount.toString());
-                    editText6.setText(ch.resource.data.status);
-                } else if (ch.error != null) {
-                    editText.setText(ch.error.http_status_code.toString());
-                    editText2.setText(ch.error.message);
-                    editText3.setText(ch.error.jsonResponse);
-                }
-            }).execute(createCharge());
+            new AddCharge(this::displayPopup).execute(createCharge());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -173,11 +127,46 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
     @Override
     public void paymentSourceResponseCallback(PaymentSourceResponse output) {
         try {
-            editText.setText(output.resource.data._id);
             mCustomerId = output.resource.data.customer_id;
             mPaymentSourceId = output.resource.data._id;
         } catch (Exception e){
             e.printStackTrace();
         }
     }
+
+    ChargeRequest createCharge() {
+        ChargeRequest charge = new ChargeRequest();
+        charge.currency ="AUD";
+        charge.amount =new BigDecimal(10);
+        charge.reference = "Charge reference";
+        charge.description = "Charge description";
+        if (mToken != null) {
+            charge.token = mToken;
+            mToken = null;
+        } else if (mCustomerId != null){
+            charge.customer_id = mCustomerId;
+            charge.payment_source_id = mPaymentSourceId;
+        }
+        return charge;
+    }
+
+    void displayPopup(ChargeResponse chargeResponse) {
+        pbLoadingPanel.setVisibility(View.GONE);
+        if (chargeResponse.resource != null) {
+            String notification = chargeResponse.resource.data._id + "\r\n" +
+                    chargeResponse.resource.data.amount.toString() + "\r\n" +
+                    chargeResponse.resource.data.external_id + "\r\n" +
+                    chargeResponse.resource.data.reference + "\r\n" +
+                    chargeResponse.resource.data.amount.toString() + "\r\n" +
+                    chargeResponse.resource.data._id + "\r\n" +
+                    chargeResponse.resource.data.status;
+            Toast.makeText(getApplicationContext(), notification, Toast.LENGTH_LONG).show();
+        } else if (chargeResponse.error != null) {
+            String notification = chargeResponse.error.http_status_code.toString() + "\r\n" +
+                    chargeResponse.error.message + "\r\n" + chargeResponse.error.jsonResponse;
+            Toast.makeText(getApplicationContext(), notification, Toast.LENGTH_LONG).show();
+        }
+    }
+
+
 }
