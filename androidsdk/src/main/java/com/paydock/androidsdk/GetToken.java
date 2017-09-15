@@ -1,6 +1,8 @@
 package com.paydock.androidsdk;
 
 import android.os.AsyncTask;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.paydock.androidsdk.Models.TokenCardResponse;
 import com.paydock.javasdk.Models.ResponseException;
@@ -19,15 +21,19 @@ public class GetToken extends AsyncTask<TokenRequest, Void, TokenCardResponse>{
 
     private Exception mException = null;
 
-    public GetToken(Environment environment, String publicKey, IGetToken delegateInterface, TokenCardResponse tokenCardResponse){
+    private RelativeLayout pbLoadingPanel;
+
+    public GetToken(Environment environment, String publicKey, IGetToken delegateInterface, TokenCardResponse tokenCardResponse, RelativeLayout relativeLayout){
         mEnvironment = environment;
         mDelegate = delegateInterface;
         mPublicKey = publicKey;
         mTokenCardResponse = tokenCardResponse;
+        pbLoadingPanel = relativeLayout;
     }
 
     @Override
     protected void onPreExecute() {
+        pbLoadingPanel.setVisibility(View.VISIBLE);
     }
 
 
@@ -50,6 +56,7 @@ public class GetToken extends AsyncTask<TokenRequest, Void, TokenCardResponse>{
     @Override
     protected void onPostExecute(TokenCardResponse ch) {
         super.onPostExecute(ch);
+        pbLoadingPanel.setVisibility(View.GONE);
         mDelegate.tokenCallback(ch);
     }
 

@@ -6,6 +6,19 @@
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
+    <RelativeLayout
+        android:id="@+id/pbPaymentSourceLoadingPanel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:indeterminate="true"/>
+    </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvPaymentSources"
         android:scrollbars="vertical"

@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.paydock.androidsdk.R;
 import com.paydock.javasdk.Models.TokenRequest;
@@ -48,6 +49,7 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
     private Resources mResources;
     private ImageView ivCreditCardIcons;
 
+    private RelativeLayout pbCreditCardLoadingPanel;
     public TokenCardResponse mTokenCardResponse;
     private String mGatewayID;
 
@@ -81,6 +83,7 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
         etCreditCardNumberLayout = findViewById(R.id.etCreditCardNumberLayout);
         etCreditCardExpiryLayout = findViewById(R.id.etCreditCardExpiryLayout);
         etCreditCardCVCLayout = findViewById(R.id.etCreditCardCVCLayout);
+        pbCreditCardLoadingPanel = findViewById(R.id.pbCreditCardLoadingPanel);
 
         mResources = getResources();
 
@@ -306,8 +309,9 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
         mGatewayID = gatewayID;
         if (validate()){
             try {
+                pbCreditCardLoadingPanel.setVisibility(VISIBLE);
                 TokenRequest token = createToken();
-                GetToken myTokenTask = new GetToken(environment, publicKey, delegateInterface, mTokenCardResponse);
+                GetToken myTokenTask = new GetToken(environment, publicKey, delegateInterface, mTokenCardResponse, pbCreditCardLoadingPanel);
                 myTokenTask.execute(token);
 
             } catch (Exception e) {

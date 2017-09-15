@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.paydock.androidsdk.GetPaymentSources;
 import com.paydock.androidsdk.IGetPaymentSources;
@@ -35,6 +36,8 @@ public class VaultedPaymentSourcesInputForm extends LinearLayout implements IVau
     RecyclerView recyclerView;
     private VaultedPaymentSourcesAdapter mAdapter;
 
+    private RelativeLayout pbPaymentSourceLoadingPanel;
+
     public VaultedPaymentSourcesInputForm(Context context) {
         super(context);
         init(context);
@@ -55,6 +58,7 @@ public class VaultedPaymentSourcesInputForm extends LinearLayout implements IVau
         rootView = inflate(context, R.layout.payment_sources, this);
 
         recyclerView = findViewById(R.id.rvPaymentSources);
+        pbPaymentSourceLoadingPanel = findViewById(R.id.pbPaymentSourceLoadingPanel);
 
         tokensList = new ArrayList<>();
         mAdapter = new VaultedPaymentSourcesAdapter(tokensList, mDelegate);
@@ -71,7 +75,7 @@ public class VaultedPaymentSourcesInputForm extends LinearLayout implements IVau
         PaymentSourceResponse tokenCardResponse = new PaymentSourceResponse();
         tokensList.clear();
         tokenCardResponse.resource.data.type = "bsb";
-        tokenCardResponse.resource.data.account_name = "Getting payment sources";
+        tokenCardResponse.resource.data.account_number = "Getting payment sources";
         tokensList.add(tokenCardResponse);
         mAdapter.notifyDataSetChanged();
     }
@@ -83,6 +87,7 @@ public class VaultedPaymentSourcesInputForm extends LinearLayout implements IVau
         mDelegate = delegateInterface;
         mAdapter = new VaultedPaymentSourcesAdapter(tokensList, mDelegate);
         recyclerView.setAdapter(mAdapter);
+        pbPaymentSourceLoadingPanel.setVisibility(VISIBLE);
 
         try {
             CustomerPaymentSourceSearchRequest token = mCustomerPaymentSourceSearchRequest();
@@ -91,6 +96,7 @@ public class VaultedPaymentSourcesInputForm extends LinearLayout implements IVau
                 public void paymentSourcesCallback(CustomerPaymentSourceSearchResponse output) {
                     try {
                         if (output.resource.count > 0){
+                            pbPaymentSourceLoadingPanel.setVisibility(GONE);
                             tokensList.clear();
                             for (int i = 0; i < output.resource.count; i++){
                                 PaymentSourceResponse response = new PaymentSourceResponse();
