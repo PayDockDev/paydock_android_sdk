@@ -18,7 +18,7 @@ There are three code sets below to get you started:
 
 
 ### activity_main
-
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 android:layout_width="match_parent"
@@ -110,10 +110,11 @@ android:layout_marginTop="20dp"
 android:text="@string/charge"
 android:textSize="14sp"/>
 
-</LinearLayout> 
+</LinearLayout>
+```
 
 ### MainActivity
-
+```Java
 package com.paydock.paydockandroidsdk;
 
 import android.app.Activity;
@@ -282,10 +283,11 @@ Toast.makeText(getApplicationContext(), notification, Toast.LENGTH_LONG).show();
 
 
 }
+```
 
 
 ### AddCharge
-
+```Java
 package com.paydock.paydockandroidsdk;
 
 import android.os.AsyncTask;
@@ -297,7 +299,7 @@ import com.paydock.javasdk.Services.Charges;
 import com.paydock.javasdk.Services.Config;
 import com.paydock.javasdk.Services.Environment;
 
-
+```Java
 class AddCharge extends AsyncTask<ChargeRequest, Void, ChargeResponse>{
 
 
@@ -338,8 +340,7 @@ super.onPostExecute(ch);
 delegate.processFinish(ch);
 }
 }
-
-
+```
 
 
 
