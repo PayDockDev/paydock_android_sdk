@@ -141,146 +141,141 @@ import java.math.BigDecimal;
 
 public class MainActivity extends Activity implements IGetToken, IPaymentSourceResponse {
 
-public static final String sPublicKey = "";
-public static final String sPrivateKey = "";
-public static final String sCreditCardGatewayID = "";
-public static final String sBankGatewayID = "";
+    public static final String sPublicKey = "";
+    public static final String sPrivateKey = "";
+    public static final String sCreditCardGatewayID = "";
+    public static final String sBankGatewayID = "";
 
-Button bCreditCard, bBank, bVault, bAddCharge;
+    Button bCreditCard, bBank, bVault, bAddCharge;
 
-CreditCardInputForm mCreditCardInputForm;
-DirectDebitInputForm mDirectDebitInputForm;
-VaultedPaymentSourcesInputForm mVaultedPaymentSourcesInputForm;
+    CreditCardInputForm mCreditCardInputForm;
+    DirectDebitInputForm mDirectDebitInputForm;
+    VaultedPaymentSourcesInputForm mVaultedPaymentSourcesInputForm;
 
-private RelativeLayout pbLoadingPanel;
+    private RelativeLayout pbLoadingPanel;
 
-String mToken = null;
-String mCustomerId = null;
-String mPaymentSourceId = null;
+    String mToken = null;
+    String mCustomerId = null;
+    String mPaymentSourceId = null;
 
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-super.onCreate(savedInstanceState);
-setContentView(R.layout.activity_main);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-bCreditCard = findViewById(R.id.bCreditCard);
-bBank = findViewById(R.id.bBank);
-bVault = findViewById(R.id.bVault);
-bAddCharge = findViewById(R.id.bAddCharge);
-mCreditCardInputForm = findViewById(R.id.creditCardInputForm);
-mDirectDebitInputForm = findViewById(R.id.directDebitInputForm);
-mVaultedPaymentSourcesInputForm = findViewById(R.id.vaultedPaymentsSourcesInputForm);
-pbLoadingPanel = findViewById(R.id.pbLoadingPanel);
+        bCreditCard = findViewById(R.id.bCreditCard);
+        bBank = findViewById(R.id.bBank);
+        bVault = findViewById(R.id.bVault);
+        bAddCharge = findViewById(R.id.bAddCharge);
+        mCreditCardInputForm = findViewById(R.id.creditCardInputForm);
+        mDirectDebitInputForm = findViewById(R.id.directDebitInputForm);
+        mVaultedPaymentSourcesInputForm = findViewById(R.id.vaultedPaymentsSourcesInputForm);
+        pbLoadingPanel = findViewById(R.id.pbLoadingPanel);
 
-mCreditCardInputForm.setVisibility(View.VISIBLE);
-mDirectDebitInputForm.setVisibility(View.GONE);
-mVaultedPaymentSourcesInputForm.setVisibility(View.GONE);
+        mCreditCardInputForm.setVisibility(View.VISIBLE);
+        mDirectDebitInputForm.setVisibility(View.GONE);
+        mVaultedPaymentSourcesInputForm.setVisibility(View.GONE);
 
-bCreditCard.setOnClickListener(v -> {
-mCreditCardInputForm.setVisibility(View.VISIBLE);
-mDirectDebitInputForm.setVisibility(View.GONE);
-mVaultedPaymentSourcesInputForm.setVisibility(View.GONE);
-});
+        bCreditCard.setOnClickListener(v -> {
+            mCreditCardInputForm.setVisibility(View.VISIBLE);
+            mDirectDebitInputForm.setVisibility(View.GONE);
+            mVaultedPaymentSourcesInputForm.setVisibility(View.GONE);
+        });
 
-bBank.setOnClickListener(v -> {
-mCreditCardInputForm.setVisibility(View.GONE);
-mDirectDebitInputForm.setVisibility(View.VISIBLE);
-mVaultedPaymentSourcesInputForm.setVisibility(View.GONE);
-});
+        bBank.setOnClickListener(v -> {
+            mCreditCardInputForm.setVisibility(View.GONE);
+            mDirectDebitInputForm.setVisibility(View.VISIBLE);
+            mVaultedPaymentSourcesInputForm.setVisibility(View.GONE);
+        });
 
-bVault.setOnClickListener(v -> {
-mCreditCardInputForm.setVisibility(View.GONE);
-mDirectDebitInputForm.setVisibility(View.GONE);
-if (mVaultedPaymentSourcesInputForm.getVisibility() == View.GONE){
-mVaultedPaymentSourcesInputForm.setVisibility(View.VISIBLE);
-mVaultedPaymentSourcesInputForm.getVaultedPaymentSources(Environment.Sandbox,
-sPublicKey, sQueryString, this);
-}
+        bVault.setOnClickListener(v -> {
+            mCreditCardInputForm.setVisibility(View.GONE);
+            mDirectDebitInputForm.setVisibility(View.GONE);
+            if (mVaultedPaymentSourcesInputForm.getVisibility() == View.GONE){
+                mVaultedPaymentSourcesInputForm.setVisibility(View.VISIBLE);
+                mVaultedPaymentSourcesInputForm.getVaultedPaymentSources(Environment.Sandbox,
+                sPublicKey, sQueryString, this);
+            }
+        });
 
-});
 
+        bAddCharge.setOnClickListener(v -> {
+            try {
+                if (v != null) { // Hide the soft keyboard
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+                if (mCreditCardInputForm.getVisibility() == View.VISIBLE) {
+                    pbLoadingPanel.setVisibility(View.VISIBLE);
+                    mCreditCardInputForm.getToken(Environment.Sandbox, sPublicKey, sCreditCardGatewayID, this);
+                } else if (mDirectDebitInputForm.getVisibility() == View.VISIBLE) {
+                    pbLoadingPanel.setVisibility(View.VISIBLE);
+                    mDirectDebitInputForm.getToken(Environment.Sandbox, sPublicKey, sBankGatewayID, this);
+                } else if (mVaultedPaymentSourcesInputForm.getVisibility() == View.VISIBLE){
+                    pbLoadingPanel.setVisibility(View.VISIBLE);
+                    new AddCharge(this::displayPopup).execute(createCharge());
+                }
+            } catch (Exception e) {
+            e.printStackTrace();
+            }
+        });
+    }
 
-bAddCharge.setOnClickListener(v -> {
-try {
-if (v != null) { // Hide the soft keyboard
-InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-}
-if (mCreditCardInputForm.getVisibility() == View.VISIBLE) {
-pbLoadingPanel.setVisibility(View.VISIBLE);
-mCreditCardInputForm.getToken(Environment.Sandbox, sPublicKey, sCreditCardGatewayID, this);
-} else if (mDirectDebitInputForm.getVisibility() == View.VISIBLE) {
-pbLoadingPanel.setVisibility(View.VISIBLE);
-mDirectDebitInputForm.getToken(Environment.Sandbox,
-sPublicKey, sBankGatewayID, this);
-} else if (mVaultedPaymentSourcesInputForm.getVisibility() == View.VISIBLE){
-pbLoadingPanel.setVisibility(View.VISIBLE);
-new AddCharge(this::displayPopup).execute(createCharge());
-}
+    //TODO: Handle Exceptions in Async callback
 
-} catch (Exception e) {
-e.printStackTrace();
-}
-});
+    @Override
+    public void tokenCallback(TokenCardResponse output){
+        try {
+            mToken = output.data;
+            new AddCharge(this::displayPopup).execute(createCharge());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-}
+    @Override
+    public void paymentSourceResponseCallback(PaymentSourceResponse output) {
+        try {
+            mCustomerId = output.resource.data.customer_id;
+            mPaymentSourceId = output.resource.data._id;
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
-//TODO: Handle Exceptions in Async callback
+    ChargeRequest createCharge() {
+        ChargeRequest charge = new ChargeRequest();
+        charge.currency ="AUD";
+        charge.amount =new BigDecimal(10);
+        charge.reference = "Charge reference";
+        charge.description = "Charge description";
+        if (mToken != null) {
+            charge.token = mToken;
+            mToken = null;
+        } else if (mCustomerId != null){
+            charge.customer_id = mCustomerId;
+            charge.payment_source_id = mPaymentSourceId;
+        }
+        return charge;
+    }
 
-@Override
-public void tokenCallback(TokenCardResponse output){
-try {
-mToken = output.data;
-new AddCharge(this::displayPopup).execute(createCharge());
-} catch (Exception e) {
-e.printStackTrace();
-}
-}
-
-@Override
-public void paymentSourceResponseCallback(PaymentSourceResponse output) {
-try {
-mCustomerId = output.resource.data.customer_id;
-mPaymentSourceId = output.resource.data._id;
-} catch (Exception e){
-e.printStackTrace();
-}
-}
-
-ChargeRequest createCharge() {
-ChargeRequest charge = new ChargeRequest();
-charge.currency ="AUD";
-charge.amount =new BigDecimal(10);
-charge.reference = "Charge reference";
-charge.description = "Charge description";
-if (mToken != null) {
-charge.token = mToken;
-mToken = null;
-} else if (mCustomerId != null){
-charge.customer_id = mCustomerId;
-charge.payment_source_id = mPaymentSourceId;
-}
-return charge;
-}
-
-void displayPopup(ChargeResponse chargeResponse) {
-pbLoadingPanel.setVisibility(View.GONE);
-if (chargeResponse.resource != null) {
-String notification = chargeResponse.resource.data._id + "\r\n" +
-chargeResponse.resource.data.amount.toString() + "\r\n" +
-chargeResponse.resource.data.external_id + "\r\n" +
-chargeResponse.resource.data.reference + "\r\n" +
-chargeResponse.resource.data.amount.toString() + "\r\n" +
-chargeResponse.resource.data._id + "\r\n" +
-chargeResponse.resource.data.status;
-Toast.makeText(getApplicationContext(), notification, Toast.LENGTH_LONG).show();
-} else if (chargeResponse.error != null) {
-String notification = chargeResponse.error.http_status_code.toString() + "\r\n" +
-chargeResponse.error.message + "\r\n" + chargeResponse.error.jsonResponse;
-Toast.makeText(getApplicationContext(), notification, Toast.LENGTH_LONG).show();
-}
-}
-
+    void displayPopup(ChargeResponse chargeResponse) {
+        pbLoadingPanel.setVisibility(View.GONE);
+        if (chargeResponse.resource != null) {
+                String notification = chargeResponse.resource.data._id + "\r\n" +
+                    chargeResponse.resource.data.amount.toString() + "\r\n" +
+                    chargeResponse.resource.data.external_id + "\r\n" +
+                    chargeResponse.resource.data.reference + "\r\n" +
+                    chargeResponse.resource.data.amount.toString() + "\r\n" +
+                    chargeResponse.resource.data._id + "\r\n" +
+                    chargeResponse.resource.data.status;
+                    Toast.makeText(getApplicationContext(), notification, Toast.LENGTH_LONG).show();
+            } else if (chargeResponse.error != null) {
+                String notification = chargeResponse.error.http_status_code.toString() + "\r\n" +
+                chargeResponse.error.message + "\r\n" + chargeResponse.error.jsonResponse;
+                Toast.makeText(getApplicationContext(), notification, Toast.LENGTH_LONG).show();
+            }
+    }
 
 }
 ```
@@ -303,42 +298,43 @@ import com.paydock.javasdk.Services.Environment;
 class AddCharge extends AsyncTask<ChargeRequest, Void, ChargeResponse>{
 
 
-interface AsyncResponse {
-void processFinish(ChargeResponse output);
-}
-private AsyncResponse delegate = null;
+    interface AsyncResponse {
+        void processFinish(ChargeResponse output);
+    }
+    
+    private AsyncResponse delegate = null;
 
-AddCharge(AsyncResponse delegate){
-this.delegate = delegate;
-}
+    AddCharge(AsyncResponse delegate){
+        this.delegate = delegate;
+    }
 
-@Override
-protected void onPreExecute() {
-}
+    @Override
+    protected void onPreExecute() {
+    }
 
 
-@Override
-protected ChargeResponse doInBackground(ChargeRequest... arg0) {
-ChargeResponse ch = new ChargeResponse();
-try{
-Config.initialise(Environment.Sandbox, MainActivity.sPrivateKey, MainActivity.sPublicKey);
-ch =  new Charges().add(arg0[0]);
-}catch (ResponseException er){
-//handle Paydock exception
-ch.error.message = er.errorResponse.message;
-ch.error.http_status_code = er.errorResponse.http_status_code;
-ch.error.jsonResponse = er.errorResponse.jsonResponse;
-}catch (Exception e){
-//handle general exception
-}
-return ch;
-}
+    @Override
+    protected ChargeResponse doInBackground(ChargeRequest... arg0) {
+        ChargeResponse ch = new ChargeResponse();
+        try {
+            Config.initialise(Environment.Sandbox, MainActivity.sPrivateKey, MainActivity.sPublicKey);
+            ch =  new Charges().add(arg0[0]);
+        } catch (ResponseException er){
+            //handle Paydock exception
+            ch.error.message = er.errorResponse.message;
+            ch.error.http_status_code = er.errorResponse.http_status_code;
+            ch.error.jsonResponse = er.errorResponse.jsonResponse;
+        } catch (Exception e){
+            //handle general exception
+        }
+        return ch;
+    }
 
-@Override
-protected void onPostExecute(ChargeResponse ch) {
-super.onPostExecute(ch);
-delegate.processFinish(ch);
-}
+    @Override
+    protected void onPostExecute(ChargeResponse ch) {
+        super.onPostExecute(ch);
+        delegate.processFinish(ch);
+    }
 }
 ```
 

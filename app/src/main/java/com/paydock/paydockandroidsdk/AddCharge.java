@@ -16,6 +16,7 @@ class AddCharge extends AsyncTask<ChargeRequest, Void, ChargeResponse>{
     interface AsyncResponse {
         void processFinish(ChargeResponse output);
     }
+
     private AsyncResponse delegate = null;
 
     AddCharge(AsyncResponse delegate){
@@ -30,15 +31,15 @@ class AddCharge extends AsyncTask<ChargeRequest, Void, ChargeResponse>{
     @Override
     protected ChargeResponse doInBackground(ChargeRequest... arg0) {
           ChargeResponse ch = new ChargeResponse();
-            try{
+            try {
                 Config.initialise(Environment.Sandbox, MainActivity.sPrivateKey, MainActivity.sPublicKey);
                 ch =  new Charges().add(arg0[0]);
-            }catch (ResponseException er){
+            } catch (ResponseException er){
                 //handle Paydock exception
                 ch.error.message = er.errorResponse.message;
                 ch.error.http_status_code = er.errorResponse.http_status_code;
                 ch.error.jsonResponse = er.errorResponse.jsonResponse;
-            }catch (Exception e){
+            } catch (Exception e){
                 //handle general exception
             }
         return ch;

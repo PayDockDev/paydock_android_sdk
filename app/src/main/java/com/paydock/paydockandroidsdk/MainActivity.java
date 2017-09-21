@@ -83,7 +83,6 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
                 mVaultedPaymentSourcesInputForm.getVaultedPaymentSources(Environment.Sandbox,
                         sPublicKey, sQueryString, this);
             }
-
         });
 
 
@@ -104,12 +103,10 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
                     pbLoadingPanel.setVisibility(View.VISIBLE);
                     new AddCharge(this::displayPopup).execute(createCharge());
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
-
     }
 
     //TODO: Handle Exceptions in Async callback
@@ -167,6 +164,5 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
             Toast.makeText(getApplicationContext(), notification, Toast.LENGTH_LONG).show();
         }
     }
-
 
 }
