@@ -14,8 +14,8 @@
         android:visibility="gone">
 
         <ProgressBar
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/pb_loading_size"
+            android:layout_height="@dimen/pb_loading_size"
             android:indeterminate="true"/>
     </RelativeLayout>
 
@@ -95,7 +95,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="start"
-
             android:labelFor="@+id/etCreditCardExpiry"
             app:errorEnabled="true"
             app:errorTextAppearance="@style/btn_error_layout">

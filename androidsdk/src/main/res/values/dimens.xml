@@ -8,5 +8,7 @@
     <dimen name="btn_icon_right_margin">8dp</dimen>
     <dimen name="btn_input_text_size">16sp</dimen>
     <dimen name="btn_input_error_text_size">12sp</dimen>
+    <dimen name="pb_loading_size">70dp</dimen>
+
 
 </resources>
