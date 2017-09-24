@@ -22,8 +22,8 @@
     <LinearLayout style="@style/btn_container_icon">
 
         <ImageView
-            android:id="@+id/ivBankIcon"
             style="@style/btn_form_icon"
+            android:id="@+id/ivBankIcon"
             android:src="@drawable/ic_bank"
             tools:ignore="ContentDescription" />
 
@@ -57,26 +57,23 @@
     <LinearLayout style="@style/btn_container_no_icon">
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/etDirectDebitBSBNumberLayout"
             style="@style/btn_text_input_layout"
+            android:id="@+id/etDirectDebitBSBNumberLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:labelFor="@+id/etDirectDebitBSBNumber"
             app:errorEnabled="true"
             app:errorTextAppearance="@style/btn_error_layout">
-
             <EditText
-                android:id="@+id/etDirectDebitBSBNumber"
                 style="@style/btn_edit_text_field"
+                android:id="@+id/etDirectDebitBSBNumber"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/btn_direct_debit_bsb_number_hint"
                 android:inputType="number"
                 android:maxLength="6"
                 android:nextFocusDown="@+id/etDirectDebitAccountNumber"
-                android:selectAllOnFocus="false"
-                android:textColor="@color/color_dark_gray"
-                android:textSize="16sp" />
+                android:selectAllOnFocus="false"/>
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
@@ -84,8 +81,8 @@
                   android:baselineAligned="false">
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/etDirectDebitAccountNumberLayout"
             style="@style/btn_text_input_layout"
+            android:id="@+id/etDirectDebitAccountNumberLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:labelFor="@+id/etDirectDebitAccountNumber"
@@ -93,16 +90,15 @@
             app:errorTextAppearance="@style/btn_error_layout">
 
             <EditText
-                android:id="@+id/etDirectDebitAccountNumber"
                 style="@style/btn_edit_text_field"
+                android:id="@+id/etDirectDebitAccountNumber"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/btn_direct_debit_account_number_hint"
                 android:inputType="number"
                 android:maxLength="20"
                 android:nextFocusDown="@+id/etDirectDebitAccountNumber"
-                android:selectAllOnFocus="false"
-                android:textSize="16sp"/>
+                android:selectAllOnFocus="false"/>
         </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
