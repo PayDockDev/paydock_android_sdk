@@ -29,4 +29,20 @@ public class DateHelper {
         return calendarExpiry.after(calendarCurrent);
     }
 
+    public static String convertCardIOFormat(int monthInt, int yearInt) {
+        try {
+            String monthString = String.valueOf(monthInt);
+            String yearString = String.valueOf(yearInt);
+            if (monthString.length() == 1)
+                monthString = "0" + monthString;
+            if (yearString.length() == 4)
+                yearString = yearString.substring(2,4);
+            return monthString + yearString;
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return "0101";
+        }
+
+    }
+
 }

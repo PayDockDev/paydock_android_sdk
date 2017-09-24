@@ -24,6 +24,9 @@ import java.math.BigDecimal;
 
 public class MainActivity extends Activity implements IGetToken, IPaymentSourceResponse {
 
+    private static final int REQUEST_SCAN = 100;
+    private static final int REQUEST_AUTOTEST = 200;
+
     public static final String sPublicKey = "8b2dad5fcf18f6f504685a46af0df82216781f3b";
     public static final String sPrivateKey = "c3de8f40ebbfff0fb74c11154274c080dfb8e3f9";
     public static final String sCreditCardGatewayID = "58b60d8a6da7e425d6e4f6c7";
@@ -33,7 +36,7 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
             "0IjpudWxsLCJza2lwIjpudWxsLCJpYXQiOjE1MDMzMTg2NzV9.U6ziYMwuviOWY" +
             "vAtp_16dwE4HDXRGVOOvdkUnhtEALE";
 
-    Button bCreditCard, bBank, bVault, bAddCharge;
+    Button bCreditCard, bBank, bVault, bAddCharge, bCardIO;
 
     CreditCardInputForm mCreditCardInputForm;
     DirectDebitInputForm mDirectDebitInputForm;
@@ -54,6 +57,7 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
         bBank = findViewById(R.id.bBank);
         bVault = findViewById(R.id.bVault);
         bAddCharge = findViewById(R.id.bAddCharge);
+        bCardIO = findViewById(R.id.bCardIO);
         mCreditCardInputForm = findViewById(R.id.creditCardInputForm);
         mDirectDebitInputForm = findViewById(R.id.directDebitInputForm);
         mVaultedPaymentSourcesInputForm = findViewById(R.id.vaultedPaymentsSourcesInputForm);
@@ -107,6 +111,11 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
                 e.printStackTrace();
             }
         });
+
+        bCardIO.setOnClickListener(v -> {
+            mCreditCardInputForm.scanCard(this);
+        });
+
     }
 
     //TODO: Handle Exceptions in Async callback

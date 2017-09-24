@@ -1,5 +1,6 @@
 package com.paydock.androidsdk.View;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.design.widget.TextInputLayout;
@@ -15,15 +16,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.paydock.androidsdk.R;
-import com.paydock.javasdk.Models.TokenRequest;
-import com.paydock.javasdk.Services.Environment;
-
 import com.paydock.androidsdk.GetToken;
 import com.paydock.androidsdk.IGetToken;
 import com.paydock.androidsdk.Models.TokenCardResponse;
+import com.paydock.androidsdk.R;
 import com.paydock.androidsdk.Tools.CardType;
 import com.paydock.androidsdk.Tools.DateHelper;
+import com.paydock.javasdk.Models.TokenRequest;
+import com.paydock.javasdk.Services.Environment;
+
+import io.card.payment.CreditCard;
 
 @SuppressWarnings({"Convert2Lambda", "SameParameterValue"})
 public class CreditCardInputForm extends LinearLayout implements ICreditCardInputForm {
@@ -368,6 +370,30 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
         etCreditCardNumberLayout.setErrorEnabled(false);
         etCreditCardExpiryLayout.setErrorEnabled(false);
         etCreditCardCVCLayout.setErrorEnabled(false);
+    }
+
+    @Override
+    public void scanCard(Activity activity) {
+            CardScanningFragment.requestScan(activity, this);
+    }
+
+    public TokenRequest parseCardIOdata (CreditCard data){
+        clear();
+        TokenRequest tokenRequest = new TokenRequest();
+        tokenRequest.gateway_id = mGatewayID;
+        etCreditCardName.setText(data.cardholderName);
+        etCreditCardNumber.setText(data.cardNumber);
+        etCreditCardExpiry.setText(DateHelper.convertCardIOFormat(data.expiryMonth
+                , data.expiryYear));
+        etCreditCardCVC.setText(data.cvv);
+        updateCardType();
+        validate();
+        tokenRequest.card_name = getCreditCardName();
+        tokenRequest.card_number = getCreditCardNumber();
+        tokenRequest.expire_month = getCreditCardExpiryMonth();
+        tokenRequest.expire_year = getCreditCardExpiryYear();
+        tokenRequest.card_ccv = getCreditCardCVC();
+        return tokenRequest;
     }
 
     private TokenRequest createToken() {
