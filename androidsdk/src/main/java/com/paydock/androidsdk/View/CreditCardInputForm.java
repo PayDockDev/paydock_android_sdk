@@ -22,9 +22,12 @@ import com.paydock.androidsdk.Models.TokenCardResponse;
 import com.paydock.androidsdk.R;
 import com.paydock.androidsdk.Tools.CardType;
 import com.paydock.androidsdk.Tools.DateHelper;
+import com.paydock.javasdk.Models.ErrorResponse;
+import com.paydock.javasdk.Models.ResponseException;
 import com.paydock.javasdk.Models.TokenRequest;
 import com.paydock.javasdk.Services.Environment;
 
+import io.card.payment.CardIOActivity;
 import io.card.payment.CreditCard;
 
 @SuppressWarnings({"Convert2Lambda", "SameParameterValue"})
@@ -53,7 +56,6 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
 
     private RelativeLayout pbCreditCardLoadingPanel;
     public TokenCardResponse mTokenCardResponse;
-    private String mGatewayID;
 
     protected CardType mCardType;
 
@@ -307,19 +309,27 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
 
 
     @Override
-    public void getToken(Environment environment, String publicKey, String gatewayID, IGetToken delegateInterface) {
-        mGatewayID = gatewayID;
+    public void getToken(Environment environment, String publicKey, String gatewayID,
+                         IGetToken delegateInterface) throws Exception {
         if (validate()){
             try {
                 pbCreditCardLoadingPanel.setVisibility(VISIBLE);
-                TokenRequest token = createToken();
-                GetToken myTokenTask = new GetToken(environment, publicKey, delegateInterface, mTokenCardResponse, pbCreditCardLoadingPanel);
+                TokenRequest token = createToken(gatewayID);
+                GetToken myTokenTask = new GetToken(environment, publicKey, delegateInterface,
+                        mTokenCardResponse, pbCreditCardLoadingPanel);
                 myTokenTask.execute(token);
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else {
+            ErrorResponse errorResponse = new ErrorResponse();
+            errorResponse.http_status_code = 400;
+            errorResponse.jsonResponse = "";
+            errorResponse.message = "invalid credentials";
+            throw new ResponseException(errorResponse, "400");
         }
+
     }
 
     @Override
@@ -372,15 +382,31 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
         etCreditCardCVCLayout.setErrorEnabled(false);
     }
 
-    @Override
-    public void scanCard(Activity activity) {
-            CardScanningFragment.requestScan(activity, this);
+
+
+    private TokenRequest createToken(String gatewayID) {
+        TokenRequest tokenRequest = new TokenRequest();
+        tokenRequest.gateway_id = gatewayID;
+        tokenRequest.card_name = getCreditCardName();
+        tokenRequest.card_number = getCreditCardNumber();
+        tokenRequest.expire_month = getCreditCardExpiryMonth();
+        tokenRequest.expire_year = getCreditCardExpiryYear();
+        tokenRequest.card_ccv = getCreditCardCVC();
+        return tokenRequest;
     }
 
-    public TokenRequest parseCardIOdata (CreditCard data){
+    @Override
+    public void scanCard(Activity activity) {
+        try {
+            CardIOActivity.canReadCardWithCamera();
+            CardScanningFragment.requestScan(activity, this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void parseCardIOdata (CreditCard data){
         clear();
-        TokenRequest tokenRequest = new TokenRequest();
-        tokenRequest.gateway_id = mGatewayID;
         etCreditCardName.setText(data.cardholderName);
         etCreditCardNumber.setText(data.cardNumber);
         etCreditCardExpiry.setText(DateHelper.convertCardIOFormat(data.expiryMonth
@@ -388,23 +414,6 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
         etCreditCardCVC.setText(data.cvv);
         updateCardType();
         validate();
-        tokenRequest.card_name = getCreditCardName();
-        tokenRequest.card_number = getCreditCardNumber();
-        tokenRequest.expire_month = getCreditCardExpiryMonth();
-        tokenRequest.expire_year = getCreditCardExpiryYear();
-        tokenRequest.card_ccv = getCreditCardCVC();
-        return tokenRequest;
-    }
-
-    private TokenRequest createToken() {
-        TokenRequest tokenRequest = new TokenRequest();
-        tokenRequest.gateway_id = mGatewayID;
-        tokenRequest.card_name = getCreditCardName();
-        tokenRequest.card_number = getCreditCardNumber();
-        tokenRequest.expire_month = getCreditCardExpiryMonth();
-        tokenRequest.expire_year = getCreditCardExpiryYear();
-        tokenRequest.card_ccv = getCreditCardCVC();
-        return tokenRequest;
     }
 }
 
