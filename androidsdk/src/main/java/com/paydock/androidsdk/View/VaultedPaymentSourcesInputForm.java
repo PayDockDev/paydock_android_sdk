@@ -89,16 +89,20 @@ public class VaultedPaymentSourcesInputForm extends LinearLayout implements IVau
         recyclerView.setAdapter(mAdapter);
         pbPaymentSourceLoadingPanel.setVisibility(VISIBLE);
 
-        try {
-            CustomerPaymentSourceSearchRequest token = mCustomerPaymentSourceSearchRequest();
-            GetPaymentSources myTokenTask = new GetPaymentSources(environment, publicKey, new IGetPaymentSources() {
-                @Override
-                public void paymentSourcesCallback(CustomerPaymentSourceSearchResponse output) {
-                    try {
-                        if (output.resource.count > 0){
-                            pbPaymentSourceLoadingPanel.setVisibility(GONE);
-                            tokensList.clear();
-                            for (int i = 0; i < output.resource.count; i++){
+        CustomerPaymentSourceSearchRequest token = mCustomerPaymentSourceSearchRequest();
+        GetPaymentSources myTokenTask = new GetPaymentSources(environment, publicKey, new IGetPaymentSources() {
+            @Override
+            public void paymentSourcesCallback(CustomerPaymentSourceSearchResponse output) {
+                try {
+                    pbPaymentSourceLoadingPanel.setVisibility(GONE);
+                    if (output.error != null) {
+                        PaymentSourceResponse response = new PaymentSourceResponse();
+                        response.error = output.error;
+                        mDelegate.paymentSourceResponseCallback(response);
+                    } else if (output.resource != null) {
+                        tokensList.clear();
+                        if (output.resource.count > 0) {
+                            for (int i = 0; i < output.resource.count; i++) {
                                 PaymentSourceResponse response = new PaymentSourceResponse();
                                 if (output.resource.data[i]._id != null)
                                     response.resource.data._id = output.resource.data[i]._id;
@@ -129,36 +133,31 @@ public class VaultedPaymentSourcesInputForm extends LinearLayout implements IVau
                                 if (output.resource.data[i].customer_reference != null)
                                     response.resource.data.customer_reference = output.resource.data[i].customer_reference;
 
-                                    if (response.resource.data.primary){
-                                        tokensList.add(0,response);
-                                        mDelegate.paymentSourceResponseCallback(response);
-                                        mAdapter.setSelectedPosition(0);
-                                    } else {
-                                        tokensList.add(response);
-                                    }
+                                if (response.resource.data.primary) {
+                                    tokensList.add(0, response);
+                                    mDelegate.paymentSourceResponseCallback(response);
+                                    mAdapter.setSelectedPosition(0);
+                                } else {
+                                    tokensList.add(response);
                                 }
-                            } else {
+                            }
+                        } else {
                             PaymentSourceResponse response = new PaymentSourceResponse();
-                            response.resource.data.customer_reference = "No payment sources found";
+                            response.resource.data.type = "bsb";
+                            response.resource.data.account_number = "No payment sources found";
                             tokensList.add(response);
+                            mDelegate.paymentSourceResponseCallback(response);
                         }
                         mAdapter.notifyDataSetChanged();
-                    } catch (Exception e){
-                        e.printStackTrace();
                     }
+                } catch (Exception e){
+                    e.printStackTrace();
                 }
-            });
-            myTokenTask.execute(token);
-
-        } catch (Exception e) {
-            //e.printStackTrace();
-            tokensList.clear();
-            PaymentSourceResponse response = new PaymentSourceResponse();
-            response.resource.data.customer_reference = "Error retrieving payment sources";
-            tokensList.add(response);
-            mAdapter.notifyDataSetChanged();
-        }
+            }
+        });
+        myTokenTask.execute(token);
     }
+
 
     private CustomerPaymentSourceSearchRequest mCustomerPaymentSourceSearchRequest() {
         CustomerPaymentSourceSearchRequest request = new CustomerPaymentSourceSearchRequest();
