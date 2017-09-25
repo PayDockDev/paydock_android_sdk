@@ -15,7 +15,8 @@ public class GetPaymentSources extends AsyncTask<CustomerPaymentSourceSearchRequ
     private Environment mEnvironment = Environment.Sandbox;
     private IGetPaymentSources mDelegate = null;
     private String mPublicKey = "";
-    private CustomerPaymentSourceSearchResponse mCustomerPaymentSourceSearchResponse = null;
+    private CustomerPaymentSourceSearchResponse mCustomerPaymentSourceSearchResponse =
+            new CustomerPaymentSourceSearchResponse();
 
     private Exception mException = null;
 
@@ -35,8 +36,7 @@ public class GetPaymentSources extends AsyncTask<CustomerPaymentSourceSearchRequ
 
         try{
             Config.initialise(mEnvironment, "", mPublicKey);
-            CustomerPaymentSourceSearchResponse ch =  new Customers().get(arg0[0]);
-            mCustomerPaymentSourceSearchResponse = ch;
+            mCustomerPaymentSourceSearchResponse = new Customers().get(arg0[0]);
         }catch (ResponseException er){
             //handle Paydock exception
             mCustomerPaymentSourceSearchResponse.error = er.errorResponse;

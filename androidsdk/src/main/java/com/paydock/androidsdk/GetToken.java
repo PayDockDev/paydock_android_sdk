@@ -17,13 +17,14 @@ public class GetToken extends AsyncTask<TokenRequest, Void, TokenCardResponse>{
     private Environment mEnvironment = Environment.Sandbox;
     private IGetToken mDelegate = null;
     private String mPublicKey = "";
-    private TokenCardResponse mTokenCardResponse = null;
+    private TokenCardResponse mTokenCardResponse;
 
     private Exception mException = null;
 
     private RelativeLayout pbLoadingPanel;
 
-    public GetToken(Environment environment, String publicKey, IGetToken delegateInterface, TokenCardResponse tokenCardResponse, RelativeLayout relativeLayout){
+    public GetToken(Environment environment, String publicKey, IGetToken delegateInterface,
+                    TokenCardResponse tokenCardResponse, RelativeLayout relativeLayout){
         mEnvironment = environment;
         mDelegate = delegateInterface;
         mPublicKey = publicKey;
@@ -48,7 +49,8 @@ public class GetToken extends AsyncTask<TokenRequest, Void, TokenCardResponse>{
             //handle Paydock exception
             mTokenCardResponse.error = er.errorResponse;
         }catch (Exception e){
-            //handle general exception
+            mTokenCardResponse.error.message = "Token create method exception";
+            mTokenCardResponse.error.jsonResponse = e.getMessage();
         }
         return mTokenCardResponse;
     }
