@@ -21,17 +21,10 @@
 
     <LinearLayout style="@style/btn_container_icon">
 
-        <ImageView
-            style="@style/btn_form_icon"
-            android:id="@+id/ivCreditCardIcon"
-            android:src="@drawable/ic_default"
-            tools:ignore="ContentDescription" />
-
         <android.support.design.widget.TextInputLayout
             style="@style/btn_text_input_layout"
+            android:layout_weight="1"
             android:id="@+id/etCreditCardNameLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:focusable="false"
             android:labelFor="@+id/etCreditCardName"
             app:errorEnabled="true"
@@ -51,32 +44,42 @@
                 android:selectAllOnFocus="false"/>
         </android.support.design.widget.TextInputLayout>
 
+        <Button
+            style="@style/btn_form_icon"
+            android:id="@+id/bCardIO"
+            android:layout_marginBottom="4dp"
+            android:background="@android:drawable/ic_menu_camera"
+            tools:ignore="ContentDescription"
+            />
+
     </LinearLayout>
 
     <LinearLayout
-        style="@style/btn_container_no_icon"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        style="@style/btn_container_icon">
 
         <android.support.design.widget.TextInputLayout
             style="@style/btn_text_input_layout"
+            android:layout_weight="1"
             android:id="@+id/etCreditCardNumberLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:labelFor="@+id/etCreditCardNumber"
             app:errorEnabled="true"
             app:errorTextAppearance="@style/btn_error_layout">
             <EditText
                 style="@style/btn_edit_text_field"
                 android:id="@+id/etCreditCardNumber"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 android:hint="@string/btn_credit_card_number_hint"
                 android:inputType="number"
                 android:maxLength="20"
                 android:nextFocusDown="@+id/etCreditCardExpiry"
                 android:selectAllOnFocus="false"/>
         </android.support.design.widget.TextInputLayout>
+
+        <ImageView
+            style="@style/btn_form_icon"
+            android:id="@+id/ivCreditCardIcon"
+            android:src="@drawable/ic_default"
+            tools:ignore="ContentDescription" />
+
 
     </LinearLayout>
 
@@ -85,8 +88,6 @@
         <android.support.design.widget.TextInputLayout
             style="@style/btn_text_input_layout"
             android:id="@+id/etCreditCardExpiryLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="start"
             android:labelFor="@+id/etCreditCardExpiry"
@@ -107,9 +108,8 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            style="@style/btn_text_input_layout"
             android:id="@+id/etCreditCardCVCLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:layout_weight="1.2"
             android:gravity="start"
             android:labelFor="@+id/etCreditCardCVC"

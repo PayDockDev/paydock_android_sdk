@@ -36,7 +36,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.android.support:design:26.1.0'
-    compile 'com.paydock:javasdk:1.0.9'
+    compile 'com.paydock:javasdk:1.1.0'
     compile 'io.card:android-sdk:5.5.1'
 }
 

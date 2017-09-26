@@ -21,17 +21,10 @@
 
     <LinearLayout style="@style/btn_container_icon">
 
-        <ImageView
-            style="@style/btn_form_icon"
-            android:id="@+id/ivBankIcon"
-            android:src="@drawable/ic_bank"
-            tools:ignore="ContentDescription" />
-
         <android.support.design.widget.TextInputLayout
             style="@style/btn_text_input_layout"
             android:id="@+id/etDirectDebitNameLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:focusable="false"
             android:labelFor="@+id/etDirectDebitName"
             app:errorEnabled="true"
@@ -52,6 +45,12 @@
                 android:textSize="16sp" />
         </android.support.design.widget.TextInputLayout>
 
+        <ImageView
+            style="@style/btn_form_icon"
+            android:id="@+id/ivBankIcon"
+            android:src="@drawable/ic_bank"
+            tools:ignore="ContentDescription" />
+
     </LinearLayout>
 
     <LinearLayout style="@style/btn_container_no_icon">
@@ -59,8 +58,6 @@
         <android.support.design.widget.TextInputLayout
             style="@style/btn_text_input_layout"
             android:id="@+id/etDirectDebitBSBNumberLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:labelFor="@+id/etDirectDebitBSBNumber"
             app:errorEnabled="true"
             app:errorTextAppearance="@style/btn_error_layout">
@@ -75,6 +72,8 @@
                 android:nextFocusDown="@+id/etDirectDebitAccountNumber"
                 android:selectAllOnFocus="false"/>
         </android.support.design.widget.TextInputLayout>
+
+
     </LinearLayout>
 
     <LinearLayout style="@style/btn_container_no_icon"
@@ -83,8 +82,6 @@
         <android.support.design.widget.TextInputLayout
             style="@style/btn_text_input_layout"
             android:id="@+id/etDirectDebitAccountNumberLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:labelFor="@+id/etDirectDebitAccountNumber"
             app:errorEnabled="true"
             app:errorTextAppearance="@style/btn_error_layout">

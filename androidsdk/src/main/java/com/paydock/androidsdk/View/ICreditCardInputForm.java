@@ -1,7 +1,5 @@
 package com.paydock.androidsdk.View;
 
-import android.app.Activity;
-
 import com.paydock.androidsdk.IGetToken;
 import com.paydock.javasdk.Services.Environment;
 
@@ -11,5 +9,4 @@ public interface ICreditCardInputForm {
                   IGetToken delegateInterface) throws Exception;
     Boolean validate();
     void clear();
-    void scanCard(Activity activity);
 }

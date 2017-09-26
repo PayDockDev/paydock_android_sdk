@@ -89,14 +89,5 @@
         android:text="@string/charge"
         android:textSize="14sp"/>
 
-    <Button
-    android:id="@+id/bCardIO"
-    android:layout_width="113dp"
-    android:layout_height="45dp"
-    android:layout_gravity="end"
-    android:layout_marginTop="20dp"
-    android:text="CardIO"
-    android:textSize="14sp"/>
-
 
 </LinearLayout>

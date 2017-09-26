@@ -34,7 +34,7 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
             "0IjpudWxsLCJza2lwIjpudWxsLCJpYXQiOjE1MDMzMTg2NzV9.U6ziYMwuviOWY" +
             "vAtp_16dwE4HDXRGVOOvdkUnhtEALE";
 
-    Button bCreditCard, bBank, bVault, bAddCharge, bCardIO;
+    Button bCreditCard, bBank, bVault, bAddCharge;
 
     CreditCardInputForm mCreditCardInputForm;
     DirectDebitInputForm mDirectDebitInputForm;
@@ -55,7 +55,6 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
         bBank = findViewById(R.id.bBank);
         bVault = findViewById(R.id.bVault);
         bAddCharge = findViewById(R.id.bAddCharge);
-        bCardIO = findViewById(R.id.bCardIO);
         mCreditCardInputForm = findViewById(R.id.creditCardInputForm);
         mDirectDebitInputForm = findViewById(R.id.directDebitInputForm);
         mVaultedPaymentSourcesInputForm = findViewById(R.id.vaultedPaymentsSourcesInputForm);
@@ -114,10 +113,6 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
             }
         });
 
-        bCardIO.setOnClickListener(v -> {
-            mCreditCardInputForm.scanCard(this);
-        });
-
     }
 
     //TODO: Handle Exceptions in Async callback
@@ -145,7 +140,8 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
     ChargeRequest createCharge() {
         ChargeRequest charge = new ChargeRequest();
         charge.currency ="AUD";
-        charge.amount =new BigDecimal(10);
+        double random = Math.random() * 50 + 1;
+        charge.amount = BigDecimal.valueOf(random);
         charge.reference = "Charge reference";
         charge.description = "Charge description";
         if (mToken != null) {

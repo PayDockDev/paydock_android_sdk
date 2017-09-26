@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -53,6 +54,7 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
     private TextInputLayout etCreditCardCVCLayout;
     private Resources mResources;
     private ImageView ivCreditCardIcons;
+    private Button bCardIO;
 
     private RelativeLayout pbCreditCardLoadingPanel;
     public TokenCardResponse mTokenCardResponse;
@@ -88,11 +90,19 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
         etCreditCardExpiryLayout = findViewById(R.id.etCreditCardExpiryLayout);
         etCreditCardCVCLayout = findViewById(R.id.etCreditCardCVCLayout);
         pbCreditCardLoadingPanel = findViewById(R.id.pbCreditCardLoadingPanel);
+        bCardIO = findViewById(R.id.bCardIO);
 
         mResources = getResources();
 
         mCardType = new CardType();
         mTokenCardResponse = new TokenCardResponse();
+
+        bCardIO.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                scanCard((Activity)context);
+            }
+        });
 
         etCreditCardName.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
@@ -395,8 +405,7 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
         return tokenRequest;
     }
 
-    @Override
-    public void scanCard(Activity activity) {
+    void scanCard(Activity activity) {
         try {
             CardIOActivity.canReadCardWithCamera();
             CardScanningFragment.requestScan(activity, this);
