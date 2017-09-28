@@ -39,6 +39,8 @@ dependencies {
     compile 'com.paydock:javasdk:1.1.0'
     compile 'io.card:android-sdk:5.5.1'
 }
+tasks.withType(Javadoc).all { enabled = false }
+
 
 ext {
     bintrayRepo = 'androidSDK'

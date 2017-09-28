@@ -6,15 +6,16 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 
-import io.card.payment.BuildConfig;
 import io.card.payment.CardIOActivity;
 import io.card.payment.CreditCard;
+
+import static com.paydock.androidsdk.BuildConfig.APPLICATION_ID;
 
 public class CardScanningFragment extends Fragment{
 
     private static final int SCAN_REQUEST_CODE = 9999;
     public static final String FRAGMENT_TAG =
-            BuildConfig.APPLICATION_ID + ".CARDIO_FRAGMENT_TAG";
+            APPLICATION_ID + ".CARDIO_FRAGMENT_TAG";
 
     private CreditCardInputForm mCreditCardInputForm;
 
