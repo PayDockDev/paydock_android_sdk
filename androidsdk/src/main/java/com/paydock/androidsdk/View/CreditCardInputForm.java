@@ -117,7 +117,7 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
             @Override
             public void onFocusChange(View v, boolean event) {
                 if (!event) {
-                    CreditCardInputForm.this.validateCreditCardNumber(true);
+                    validateCreditCardNumber(true);
                 }
             }
         });
@@ -251,7 +251,7 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
             if (showErrors)etCreditCardName.setError(mResources.getString(R.string.btn_credit_card_name_required));
             return false;
         } else {
-            etCreditCardExpiryLayout.setErrorEnabled(false);
+            etCreditCardNameLayout.setErrorEnabled(false);
             return true;
         }
     }
@@ -386,6 +386,10 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
         etCreditCardNumber.setText("");
         etCreditCardExpiry.setText("");
         etCreditCardCVC.setText("");
+        etCreditCardName.setError(null);
+        etCreditCardNumber.setError(null);
+        etCreditCardExpiry.setError(null);
+        etCreditCardCVC.setError(null);
         etCreditCardNameLayout.setErrorEnabled(false);
         etCreditCardNumberLayout.setErrorEnabled(false);
         etCreditCardExpiryLayout.setErrorEnabled(false);

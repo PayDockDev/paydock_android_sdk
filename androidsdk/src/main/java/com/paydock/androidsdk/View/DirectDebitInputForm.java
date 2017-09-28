@@ -246,6 +246,9 @@ public class DirectDebitInputForm extends LinearLayout implements IDirectDebitIn
         etDirectDebitName.setText("");
         etDirectDebitBSBNumber.setText("");
         etDirectDebitAccountNumber.setText("");
+        etDirectDebitName.setError(null);
+        etDirectDebitBSBNumber.setError(null);
+        etDirectDebitAccountNumber.setError(null);
         etDirectDebitNameLayout.setErrorEnabled(false);
         etDirectDebitBSBNumberLayout.setErrorEnabled(false);
         etDirectDebitAccountNumberLayout.setErrorEnabled(false);
