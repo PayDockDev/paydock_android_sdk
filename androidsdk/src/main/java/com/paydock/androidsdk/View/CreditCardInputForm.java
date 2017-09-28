@@ -11,8 +11,8 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -54,7 +54,7 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
     private TextInputLayout etCreditCardCVCLayout;
     private Resources mResources;
     private ImageView ivCreditCardIcons;
-    private Button bCardIO;
+    private ImageButton bCardIO;
 
     private RelativeLayout pbCreditCardLoadingPanel;
     public TokenCardResponse mTokenCardResponse;
