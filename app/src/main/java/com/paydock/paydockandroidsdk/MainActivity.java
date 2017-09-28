@@ -140,8 +140,8 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
     ChargeRequest createCharge() {
         ChargeRequest charge = new ChargeRequest();
         charge.currency ="AUD";
-        double random = Math.random() * 50 + 1;
-        charge.amount = BigDecimal.valueOf(random);
+        double random = (Math.random() * 100);
+        charge.amount = BigDecimal.valueOf(random).setScale(0, BigDecimal.ROUND_HALF_UP);
         charge.reference = "Charge reference";
         charge.description = "Charge description";
         if (mToken != null) {
@@ -161,7 +161,6 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
                     chargeResponse.resource.data.amount.toString() + "\r\n" +
                     chargeResponse.resource.data.external_id + "\r\n" +
                     chargeResponse.resource.data.reference + "\r\n" +
-                    chargeResponse.resource.data.amount.toString() + "\r\n" +
                     chargeResponse.resource.data._id + "\r\n" +
                     chargeResponse.resource.data.status;
             Toast.makeText(getApplicationContext(), notification, Toast.LENGTH_LONG).show();
