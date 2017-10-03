@@ -5,8 +5,8 @@ For more info on the Paydock API, see our [full documentation](https://docs.payd
 
 ## Getting access to the library
 
-To download the library please visit https://bintray.com/markcardamis/androidSDK/androidsdk.
-There are different dependency snippets to be inserted in your code based on your selected repository (we support Gradle, Maven or Ivy). Example dependency is:
+To download the library please visit [JCentre](https://bintray.com/markcardamis/androidSDK/androidsdk).
+There are different dependency snippets to be inserted in your code based on your selected build settings (we support Gradle, Maven or Ivy). Example Gradle dependency is:
 ```
 compile 'com.paydock:androidsdk:1.0.1'
 ```
