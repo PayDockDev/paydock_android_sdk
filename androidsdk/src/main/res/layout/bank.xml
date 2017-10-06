@@ -40,7 +40,7 @@
                 android:hint="@string/btn_direct_debit_name_hint"
                 android:inputType="text"
                 android:maxLength="100"
-                android:nextFocusDown="@+id/etDirectDebitBSBNumber"
+                android:nextFocusForward="@+id/etDirectDebitBSBNumber"
                 android:selectAllOnFocus="false"
                 android:textSize="16sp" />
         </android.support.design.widget.TextInputLayout>
@@ -69,7 +69,7 @@
                 android:hint="@string/btn_direct_debit_bsb_number_hint"
                 android:inputType="number"
                 android:maxLength="6"
-                android:nextFocusDown="@+id/etDirectDebitAccountNumber"
+                android:nextFocusForward="@+id/etDirectDebitAccountNumber"
                 android:selectAllOnFocus="false"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -94,7 +94,6 @@
                 android:hint="@string/btn_direct_debit_account_number_hint"
                 android:inputType="number"
                 android:maxLength="20"
-                android:nextFocusDown="@+id/etDirectDebitAccountNumber"
                 android:selectAllOnFocus="false"/>
         </android.support.design.widget.TextInputLayout>
 
