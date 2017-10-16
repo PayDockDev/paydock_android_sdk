@@ -27,7 +27,7 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
 
     public static final String sPublicKey = "8b2dad5fcf18f6f504685a46af0df82216781f3b";
     public static final String sPrivateKey = "c3de8f40ebbfff0fb74c11154274c080dfb8e3f9";
-    public static final String sCreditCardGatewayID = "58b60d8a6da7e425d6e4f6c7";
+    public static final String sCreditCardGatewayID = "58dba2dc5219634f922f79c3";
     public static final String sBankGatewayID = "58bf7dd43c541b5b87f741df";
     public static final String sQueryString = "eyJhbGciOiJIUzI1NiIsInR5cC" +
             "I6IkpXVCJ9.eyJpZCI6IjU4YjY0Y2UzNmRhN2U0MjVkNmU0ZjcwNSIsImxpbWl" +
@@ -46,6 +46,8 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
     String mCustomerId = null;
     String mPaymentSourceId = null;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,9 +62,13 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
         mVaultedPaymentSourcesInputForm = findViewById(R.id.vaultedPaymentsSourcesInputForm);
         pbLoadingPanel = findViewById(R.id.pbLoadingPanel);
 
-        mCreditCardInputForm.setVisibility(View.VISIBLE);
+        //mCreditCardInputForm.setVisibility(View.VISIBLE);
         mDirectDebitInputForm.setVisibility(View.GONE);
         mVaultedPaymentSourcesInputForm.setVisibility(View.GONE);
+
+        mCreditCardInputForm.setEmail(true)
+                            .build();
+
 
         bCreditCard.setOnClickListener(v -> {
             mCreditCardInputForm.setVisibility(View.VISIBLE);
@@ -74,6 +80,7 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
             mCreditCardInputForm.setVisibility(View.GONE);
             mDirectDebitInputForm.setVisibility(View.VISIBLE);
             mVaultedPaymentSourcesInputForm.setVisibility(View.GONE);
+
         });
 
         bVault.setOnClickListener(v -> {
