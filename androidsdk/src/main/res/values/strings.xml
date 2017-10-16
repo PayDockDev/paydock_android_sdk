@@ -16,6 +16,33 @@
     <string name="btn_credit_card_cvc_hint">CVC</string>
     <string name="btn_credit_card_cvc_invalid">Security code invalid</string>
 
+    <string name="btn_credit_card_email_hint">Email</string>
+    <string name="btn_credit_card_email_required">Email address required</string>
+
+    <string name="btn_credit_card_phone_hint">Phone</string>
+    <string name="btn_credit_card_phone_required">Phone number required</string>
+
+    <string name="btn_credit_card_first_name_hint">First Name</string>
+    <string name="btn_credit_card_first_name_required">First name required</string>
+
+    <string name="btn_credit_card_last_name_hint">Last Name</string>
+    <string name="btn_credit_card_last_name_required">Last name required</string>
+
+    <string name="btn_credit_card_address_line_1_hint">Address Line 1</string>
+    <string name="btn_credit_card_address_line_1_required">Address line 1 required</string>
+
+    <string name="btn_credit_card_address_line_2_hint">Address Line 2</string>
+    <string name="btn_credit_card_address_line_2_required">Address line 2 required</string>
+
+    <string name="btn_credit_card_address_city_hint">City</string>
+    <string name="btn_credit_card_address_city_required">City required</string>
+
+    <string name="btn_credit_card_address_country_hint">Country</string>
+    <string name="btn_credit_card_address_country_required">Country required</string>
+
+    <string name="btn_credit_card_address_post_code_hint">Post Code</string>
+    <string name="btn_credit_card_address_post_code_required">Post code required</string>
+
     <string name="btn_credit_card_visa">Visa</string>
     <string name="btn_credit_card_mastercard">MasterCard</string>
     <string name="btn_credit_card_amex">AMEX</string>

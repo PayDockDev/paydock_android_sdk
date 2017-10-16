@@ -33,8 +33,6 @@
             <EditText
                 style="@style/btn_edit_text_field"
                 android:id="@+id/etCreditCardName"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 android:fitsSystemWindows="false"
                 android:focusableInTouchMode="true"
                 android:hint="@string/btn_credit_card_name_hint"
@@ -81,10 +79,10 @@
             android:src="@drawable/ic_default"
             tools:ignore="ContentDescription" />
 
-
     </LinearLayout>
 
-    <LinearLayout style="@style/btn_container_no_icon">
+    <LinearLayout style="@style/btn_container_no_icon"
+                  android:baselineAligned="false">
 
         <android.support.design.widget.TextInputLayout
             style="@style/btn_text_input_layout"
@@ -129,6 +127,241 @@
                 android:inputType="number"
                 android:maxLength="4"
                 android:selectAllOnFocus="true"
+                android:textAlignment="gravity"/>
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/btn_container_no_icon">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/etCreditCardEmailLayout"
+            style="@style/btn_text_input_layout"
+            android:gravity="start"
+            android:labelFor="@+id/etCreditCardEmail"
+            app:errorEnabled="true"
+            app:errorTextAppearance="@style/btn_error_layout">
+
+            <EditText
+                android:id="@+id/etCreditCardEmail"
+                style="@style/btn_edit_text_field"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:hint="@string/btn_credit_card_email_hint"
+                android:inputType="textEmailAddress"
+                android:maxLength="100"
+                android:selectAllOnFocus="true"
+                android:textAlignment="gravity"/>
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/btn_container_no_icon">
+
+        <android.support.design.widget.TextInputLayout
+            style="@style/btn_text_input_layout"
+            android:id="@+id/etCreditCardPhoneLayout"
+            android:gravity="start"
+            android:labelFor="@+id/etCreditCardPhone"
+            app:errorEnabled="true"
+            app:errorTextAppearance="@style/btn_error_layout">
+
+            <EditText
+                style="@style/btn_edit_text_field"
+                android:id="@+id/etCreditCardPhone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:hint="@string/btn_credit_card_phone_hint"
+                android:inputType="phone"
+                android:maxLength="16"
+                android:textAlignment="gravity"/>
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/btn_container_no_icon">
+
+        <android.support.design.widget.TextInputLayout
+            style="@style/btn_text_input_layout"
+            android:id="@+id/etCreditCardFirstNameLayout"
+            android:gravity="start"
+            android:labelFor="@+id/etCreditCardFirstName"
+            app:errorEnabled="true"
+            app:errorTextAppearance="@style/btn_error_layout">
+
+            <EditText
+                style="@style/btn_edit_text_field"
+                android:id="@+id/etCreditCardFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:hint="@string/btn_credit_card_first_name_hint"
+                android:inputType="text"
+                android:maxLength="32"
+                android:textAlignment="gravity"/>
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/btn_container_no_icon">
+
+        <android.support.design.widget.TextInputLayout
+            style="@style/btn_text_input_layout"
+            android:id="@+id/etCreditCardLastNameLayout"
+            android:gravity="start"
+            android:labelFor="@+id/etCreditCardLastName"
+            app:errorEnabled="true"
+            app:errorTextAppearance="@style/btn_error_layout">
+
+            <EditText
+                style="@style/btn_edit_text_field"
+                android:id="@+id/etCreditCardLastName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:hint="@string/btn_credit_card_last_name_hint"
+                android:inputType="text"
+                android:maxLength="32"
+                android:textAlignment="gravity"/>
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/btn_container_no_icon">
+
+    <android.support.design.widget.TextInputLayout
+        style="@style/btn_text_input_layout"
+        android:id="@+id/etCreditCardAddressLine1Layout"
+        android:gravity="start"
+        android:labelFor="@+id/etCreditCardAddressLine1"
+        app:errorEnabled="true"
+        app:errorTextAppearance="@style/btn_error_layout">
+
+        <EditText
+            style="@style/btn_edit_text_field"
+            android:id="@+id/etCreditCardAddressLine1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:hint="@string/btn_credit_card_address_line_1_hint"
+            android:inputType="text"
+            android:maxLength="32"
+            android:textAlignment="gravity"/>
+    </android.support.design.widget.TextInputLayout>
+
+</LinearLayout>
+
+    <LinearLayout style="@style/btn_container_no_icon">
+
+        <android.support.design.widget.TextInputLayout
+            style="@style/btn_text_input_layout"
+            android:id="@+id/etCreditCardAddressLine2Layout"
+            android:gravity="start"
+            android:labelFor="@+id/etCreditCardAddressLine2"
+            app:errorEnabled="true"
+            app:errorTextAppearance="@style/btn_error_layout">
+
+            <EditText
+                style="@style/btn_edit_text_field"
+                android:id="@+id/etCreditCardAddressLine2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:hint="@string/btn_credit_card_address_line_2_hint"
+                android:inputType="text"
+                android:maxLength="32"
+                android:textAlignment="gravity"/>
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/btn_container_no_icon">
+
+        <android.support.design.widget.TextInputLayout
+            style="@style/btn_text_input_layout"
+            android:id="@+id/etCreditCardAddressCityLayout"
+            android:gravity="start"
+            android:labelFor="@+id/etCreditCardAddressCity"
+            app:errorEnabled="true"
+            app:errorTextAppearance="@style/btn_error_layout">
+
+            <EditText
+                style="@style/btn_edit_text_field"
+                android:id="@+id/etCreditCardAddressCity"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:hint="@string/btn_credit_card_address_city_hint"
+                android:inputType="text"
+                android:maxLength="32"
+                android:textAlignment="gravity"/>
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/btn_container_no_icon">
+
+        <android.support.design.widget.TextInputLayout
+            style="@style/btn_text_input_layout"
+            android:id="@+id/etCreditCardAddressCountryLayout"
+            android:gravity="start"
+            android:labelFor="@+id/etCreditCardAddressCountry"
+            app:errorEnabled="true"
+            app:errorTextAppearance="@style/btn_error_layout">
+
+            <EditText
+                style="@style/btn_edit_text_field"
+                android:id="@+id/etCreditCardAddressCountry"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:hint="@string/btn_credit_card_address_country_hint"
+                android:inputType="text"
+                android:maxLength="32"
+                android:textAlignment="gravity"/>
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/btn_container_no_icon">
+
+        <android.support.design.widget.TextInputLayout
+            style="@style/btn_text_input_layout"
+            android:id="@+id/etCreditCardAddressPostCodeLayout"
+            android:gravity="start"
+            android:labelFor="@+id/etCreditCardAddressPostCode"
+            app:errorEnabled="true"
+            app:errorTextAppearance="@style/btn_error_layout">
+
+            <EditText
+                style="@style/btn_edit_text_field"
+                android:id="@+id/etCreditCardAddressPostCode"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:hint="@string/btn_credit_card_address_post_code_hint"
+                android:inputType="number"
+                android:maxLength="6"
                 android:textAlignment="gravity"/>
         </android.support.design.widget.TextInputLayout>
 

@@ -37,6 +37,7 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
     private static final String TAG = "CardInputForm";
 
     View rootView;
+    private CardType mCardType;
 
     private static final int[] NORMAL_CARD_SPACES = { 4, 8, 12 };
     private static final int[] SHORT_CARD_SPACES = { 4, 10 };
@@ -48,10 +49,28 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
     private EditText etCreditCardNumber;
     private EditText etCreditCardExpiry;
     private EditText etCreditCardCVC;
+    private EditText etCreditCardEmail;
+    private EditText etCreditCardPhone;
+    private EditText etCreditCardFirstName;
+    private EditText etCreditCardLastName;
+    private EditText etCreditCardAddressLine1;
+    private EditText etCreditCardAddressLine2;
+    private EditText etCreditCardAddressCity;
+    private EditText etCreditCardAddressCountry;
+    private EditText etCreditCardAddressPostCode;
     private TextInputLayout etCreditCardNameLayout;
     private TextInputLayout etCreditCardNumberLayout;
     private TextInputLayout etCreditCardExpiryLayout;
     private TextInputLayout etCreditCardCVCLayout;
+    private TextInputLayout etCreditCardEmailLayout;
+    private TextInputLayout etCreditCardPhoneLayout;
+    private TextInputLayout etCreditCardFirstNameLayout;
+    private TextInputLayout etCreditCardLastNameLayout;
+    private TextInputLayout etCreditCardAddressLine1Layout;
+    private TextInputLayout etCreditCardAddressLine2Layout;
+    private TextInputLayout etCreditCardAddressCityLayout;
+    private TextInputLayout etCreditCardAddressCountryLayout;
+    private TextInputLayout etCreditCardAddressPostCodeLayout;
     private Resources mResources;
     private ImageView ivCreditCardIcons;
     private ImageButton bCardIO;
@@ -59,7 +78,16 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
     private RelativeLayout pbCreditCardLoadingPanel;
     public TokenCardResponse mTokenCardResponse;
 
-    protected CardType mCardType;
+    private boolean mCreditCardEmailRequired = false;
+    private boolean mCreditCardPhoneRequired = false;
+    private boolean mCreditCardFirstNameRequired = false;
+    private boolean mCreditCardLastNameRequired = false;
+    private boolean mCreditCardAddressLine1Required = false;
+    private boolean mCreditCardAddressLine2Required = false;
+    private boolean mCreditCardAddressCityRequired = false;
+    private boolean mCreditCardAddressCountryRequired = false;
+    private boolean mCreditCardAddressPostCodeRequired = false;
+
 
     public CreditCardInputForm(Context context) {
         super(context);
@@ -78,17 +106,37 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
 
     private void init(Context context) {
 
+        setVisibility(GONE); // hide the view until the optional fields are added
+
         rootView = inflate(context, R.layout.credit_card, this);
 
         etCreditCardName = findViewById(R.id.etCreditCardName);
         etCreditCardNumber = findViewById(R.id.etCreditCardNumber);
         etCreditCardExpiry = findViewById(R.id.etCreditCardExpiry);
         etCreditCardCVC = findViewById(R.id.etCreditCardCVC);
+        etCreditCardEmail = findViewById(R.id.etCreditCardEmail);
+        etCreditCardPhone = findViewById(R.id.etCreditCardPhone);
+        etCreditCardFirstName = findViewById(R.id.etCreditCardFirstName);
+        etCreditCardLastName = findViewById(R.id.etCreditCardLastName);
+        etCreditCardAddressLine1 = findViewById(R.id.etCreditCardAddressLine1);
+        etCreditCardAddressLine2 = findViewById(R.id.etCreditCardAddressLine2);
+        etCreditCardAddressCity = findViewById(R.id.etCreditCardAddressCity);
+        etCreditCardAddressCountry = findViewById(R.id.etCreditCardAddressCountry);
+        etCreditCardAddressPostCode = findViewById(R.id.etCreditCardAddressPostCode);
         ivCreditCardIcons = findViewById(R.id.ivCreditCardIcon);
         etCreditCardNameLayout = findViewById(R.id.etCreditCardNameLayout);
         etCreditCardNumberLayout = findViewById(R.id.etCreditCardNumberLayout);
         etCreditCardExpiryLayout = findViewById(R.id.etCreditCardExpiryLayout);
         etCreditCardCVCLayout = findViewById(R.id.etCreditCardCVCLayout);
+        etCreditCardEmailLayout = findViewById(R.id.etCreditCardEmailLayout);
+        etCreditCardPhoneLayout = findViewById(R.id.etCreditCardPhoneLayout);
+        etCreditCardFirstNameLayout = findViewById(R.id.etCreditCardFirstNameLayout);
+        etCreditCardLastNameLayout = findViewById(R.id.etCreditCardLastNameLayout);
+        etCreditCardAddressLine1Layout = findViewById(R.id.etCreditCardAddressLine1Layout);
+        etCreditCardAddressLine2Layout = findViewById(R.id.etCreditCardAddressLine2Layout);
+        etCreditCardAddressCityLayout = findViewById(R.id.etCreditCardAddressCityLayout);
+        etCreditCardAddressCountryLayout = findViewById(R.id.etCreditCardAddressCountryLayout);
+        etCreditCardAddressPostCodeLayout = findViewById(R.id.etCreditCardAddressPostCodeLayout);
         pbCreditCardLoadingPanel = findViewById(R.id.pbCreditCardLoadingPanel);
         bCardIO = findViewById(R.id.bCardIO);
 
@@ -220,6 +268,64 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
         }
     }
 
+    public CreditCardInputForm setEmail(boolean optionalField) {
+        mCreditCardEmailRequired = optionalField;
+        return this;
+    }
+
+    public CreditCardInputForm setPhone(boolean optionalField) {
+        mCreditCardPhoneRequired = optionalField;
+        return this;
+    }
+
+    public CreditCardInputForm setFirstName(boolean optionalField) {
+        mCreditCardFirstNameRequired = optionalField;
+        return this;
+    }
+
+    public CreditCardInputForm setLastName(boolean optionalField) {
+        mCreditCardLastNameRequired = optionalField;
+        return this;
+    }
+
+    public CreditCardInputForm setAddressLine1(boolean optionalField) {
+        mCreditCardAddressLine1Required = optionalField;
+        return this;
+    }
+
+    public CreditCardInputForm setAddressLine2(boolean optionalField) {
+        mCreditCardAddressLine2Required = optionalField;
+        return this;
+    }
+
+    public CreditCardInputForm setCity(boolean optionalField) {
+        mCreditCardAddressCityRequired = optionalField;
+        return this;
+    }
+
+    public CreditCardInputForm setCountry(boolean optionalField) {
+        mCreditCardAddressCountryRequired = optionalField;
+        return this;
+    }
+
+    public CreditCardInputForm setPostCode(boolean optionalField) {
+        mCreditCardAddressPostCodeRequired = optionalField;
+        return this;
+    }
+
+    public void build() {
+        etCreditCardEmailLayout.setVisibility(mCreditCardEmailRequired ? VISIBLE : GONE );
+        etCreditCardPhoneLayout.setVisibility(mCreditCardPhoneRequired ? VISIBLE : GONE );
+        etCreditCardFirstNameLayout.setVisibility(mCreditCardFirstNameRequired ? VISIBLE : GONE );
+        etCreditCardLastNameLayout.setVisibility(mCreditCardLastNameRequired ? VISIBLE : GONE );
+        etCreditCardAddressLine1Layout.setVisibility(mCreditCardAddressLine1Required ? VISIBLE : GONE );
+        etCreditCardAddressLine2Layout.setVisibility(mCreditCardAddressLine2Required ? VISIBLE : GONE );
+        etCreditCardAddressCityLayout.setVisibility(mCreditCardAddressCityRequired ? VISIBLE : GONE );
+        etCreditCardAddressCountryLayout.setVisibility(mCreditCardAddressCountryRequired ? VISIBLE : GONE );
+        etCreditCardAddressPostCodeLayout.setVisibility(mCreditCardAddressPostCodeRequired ? VISIBLE : GONE );
+        setVisibility(VISIBLE);
+    }
+
 
     private String getCreditCardName() {
         return etCreditCardName.getText().toString();
@@ -244,6 +350,43 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
     private String getCreditCardCVC() {
         return etCreditCardCVC.getText().toString();
     }
+
+    private String getCreditCardEmail() {
+        return etCreditCardEmail.getText().toString();
+    }
+
+    private String getCreditCardPhone() {
+        return etCreditCardPhone.getText().toString();
+    }
+
+    private String getCreditCardFirstName() {
+        return etCreditCardFirstName.getText().toString();
+    }
+
+    private String getCreditCardLastName() {
+        return etCreditCardLastName.getText().toString();
+    }
+
+    private String getCreditCardAddressLine1() {
+        return etCreditCardAddressLine1.getText().toString();
+    }
+
+    private String getCreditCardAddressLine2() {
+        return etCreditCardAddressLine2.getText().toString();
+    }
+
+    private String getCreditCardAddressCity() {
+        return etCreditCardAddressCity.getText().toString();
+    }
+
+    private String getCreditCardAddressCountry() {
+        return etCreditCardAddressCountry.getText().toString();
+    }
+
+    private String getCreditCardAddressPostCode() {
+        return etCreditCardAddressPostCode.getText().toString();
+    }
+
 
     private Boolean validateCreditCardName(boolean showErrors)
     {
@@ -317,6 +460,104 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
         }
     }
 
+    private Boolean validateCreditCardEmail(boolean showErrors)
+    {
+        if (getCreditCardEmail().length() == 0) {
+            if (showErrors)etCreditCardEmail.setError(mResources.getString(R.string.btn_credit_card_email_required));
+            return false;
+        } else {
+            etCreditCardEmailLayout.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    private Boolean validateCreditCardPhone(boolean showErrors)
+    {
+        if (getCreditCardPhone().length() == 0) {
+            if (showErrors)etCreditCardPhone.setError(mResources.getString(R.string.btn_credit_card_phone_required));
+            return false;
+        } else {
+            etCreditCardPhoneLayout.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    private Boolean validateCreditCardFirstName(boolean showErrors)
+    {
+        if (getCreditCardFirstName().length() == 0) {
+            if (showErrors)etCreditCardFirstName.setError(mResources.getString(R.string.btn_credit_card_first_name_required));
+            return false;
+        } else {
+            etCreditCardFirstNameLayout.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    private Boolean validateCreditCardLastName(boolean showErrors)
+    {
+        if (getCreditCardLastName().length() == 0) {
+            if (showErrors)etCreditCardLastName.setError(mResources.getString(R.string.btn_credit_card_last_name_required));
+            return false;
+        } else {
+            etCreditCardLastNameLayout.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    private Boolean validateCreditCardAddressLine1(boolean showErrors)
+    {
+        if (getCreditCardAddressLine1().length() == 0) {
+            if (showErrors)etCreditCardAddressLine1.setError(mResources.getString(R.string.btn_credit_card_address_line_1_required));
+            return false;
+        } else {
+            etCreditCardAddressLine1Layout.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    private Boolean validateCreditCardAddressLine2(boolean showErrors)
+    {
+        if (getCreditCardAddressLine2().length() == 0) {
+            if (showErrors)etCreditCardAddressLine2.setError(mResources.getString(R.string.btn_credit_card_address_line_2_required));
+            return false;
+        } else {
+            etCreditCardAddressLine2Layout.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    private Boolean validateCreditCardAddressCity(boolean showErrors)
+    {
+        if (getCreditCardAddressCity().length() == 0) {
+            if (showErrors)etCreditCardAddressCity.setError(mResources.getString(R.string.btn_credit_card_address_city_required));
+            return false;
+        } else {
+            etCreditCardAddressCityLayout.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    private Boolean validateCreditCardAddressCountry(boolean showErrors)
+    {
+        if (getCreditCardAddressCountry().length() == 0) {
+            if (showErrors)etCreditCardAddressCountry.setError(mResources.getString(R.string.btn_credit_card_address_country_required));
+            return false;
+        } else {
+            etCreditCardAddressCountryLayout.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    private Boolean validateCreditCardAddressPostCode(boolean showErrors)
+    {
+        if (getCreditCardAddressPostCode().length() == 0) {
+            if (showErrors)etCreditCardAddressPostCode.setError(mResources.getString(R.string.btn_credit_card_address_post_code_required));
+            return false;
+        } else {
+            etCreditCardAddressPostCodeLayout.setErrorEnabled(false);
+            return true;
+        }
+    }
 
     @Override
     public void getToken(Environment environment, String publicKey, String gatewayID,
@@ -336,7 +577,7 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
             ErrorResponse errorResponse = new ErrorResponse();
             errorResponse.http_status_code = 400;
             errorResponse.jsonResponse = "";
-            errorResponse.message = "invalid credentials";
+            errorResponse.message = "invalid user input credentials";
             throw new ResponseException(errorResponse, "400");
         }
 
@@ -346,6 +587,60 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
     public Boolean validate()
     {
         boolean isValid = true;
+        if (mCreditCardAddressPostCodeRequired) {
+            if (!validateCreditCardAddressPostCode(true)) {
+                etCreditCardAddressPostCodeLayout.requestFocus();
+                isValid = false;
+            }
+        }
+        if (mCreditCardAddressCountryRequired) {
+            if (!validateCreditCardAddressCountry(true)) {
+                etCreditCardAddressCountryLayout.requestFocus();
+                isValid = false;
+            }
+        }
+        if (mCreditCardAddressCityRequired) {
+            if (!validateCreditCardAddressCity(true)) {
+                etCreditCardAddressCityLayout.requestFocus();
+                isValid = false;
+            }
+        }
+        if (mCreditCardAddressLine2Required) {
+            if (!validateCreditCardAddressLine2(true)) {
+                etCreditCardAddressLine2Layout.requestFocus();
+                isValid = false;
+            }
+        }
+        if (mCreditCardAddressLine1Required) {
+            if (!validateCreditCardAddressLine1(true)) {
+                etCreditCardAddressLine1Layout.requestFocus();
+                isValid = false;
+            }
+        }
+        if (mCreditCardLastNameRequired) {
+            if (!validateCreditCardLastName(true)) {
+                etCreditCardLastNameLayout.requestFocus();
+                isValid = false;
+            }
+        }
+        if (mCreditCardFirstNameRequired) {
+            if (!validateCreditCardFirstName(true)) {
+                etCreditCardFirstNameLayout.requestFocus();
+                isValid = false;
+            }
+        }
+        if (mCreditCardPhoneRequired) {
+            if (!validateCreditCardPhone(true)) {
+                etCreditCardPhoneLayout.requestFocus();
+                isValid = false;
+            }
+        }
+        if (mCreditCardEmailRequired) {
+            if (!validateCreditCardEmail(true)) {
+                etCreditCardEmailLayout.requestFocus();
+                isValid = false;
+            }
+        }
         if(!validateCreditCardCVC(true)){
             etCreditCardCVCLayout.requestFocus();
             isValid = false;
@@ -383,23 +678,59 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
     @Override
     public void clear() {
         etCreditCardName.setText("");
-        etCreditCardNumber.setText("");
-        etCreditCardExpiry.setText("");
-        etCreditCardCVC.setText("");
         etCreditCardName.setError(null);
-        etCreditCardNumber.setError(null);
-        etCreditCardExpiry.setError(null);
-        etCreditCardCVC.setError(null);
         etCreditCardNameLayout.setErrorEnabled(false);
+        etCreditCardNumber.setText("");
+        etCreditCardNumber.setError(null);
         etCreditCardNumberLayout.setErrorEnabled(false);
+        etCreditCardExpiry.setText("");
+        etCreditCardExpiry.setError(null);
         etCreditCardExpiryLayout.setErrorEnabled(false);
+        etCreditCardCVC.setText("");
+        etCreditCardCVC.setError(null);
         etCreditCardCVCLayout.setErrorEnabled(false);
+        etCreditCardEmail.setText("");
+        etCreditCardEmail.setError(null);
+        etCreditCardEmailLayout.setErrorEnabled(false);
+        etCreditCardPhone.setText("");
+        etCreditCardPhone.setError(null);
+        etCreditCardPhoneLayout.setErrorEnabled(false);
+        etCreditCardFirstName.setText("");
+        etCreditCardFirstName.setError(null);
+        etCreditCardFirstNameLayout.setErrorEnabled(false);
+        etCreditCardLastName.setText("");
+        etCreditCardLastName.setError(null);
+        etCreditCardLastNameLayout.setErrorEnabled(false);
+        etCreditCardAddressLine1.setText("");
+        etCreditCardAddressLine1.setError(null);
+        etCreditCardAddressLine1Layout.setErrorEnabled(false);
+        etCreditCardAddressLine2.setText("");
+        etCreditCardAddressLine2.setError(null);
+        etCreditCardAddressLine2Layout.setErrorEnabled(false);
+        etCreditCardAddressCity.setText("");
+        etCreditCardAddressCity.setError(null);
+        etCreditCardAddressCityLayout.setErrorEnabled(false);
+        etCreditCardAddressCountry.setText("");
+        etCreditCardAddressCountry.setError(null);
+        etCreditCardAddressCountryLayout.setErrorEnabled(false);
+        etCreditCardAddressPostCode.setText("");
+        etCreditCardAddressPostCode.setError(null);
+        etCreditCardAddressPostCodeLayout.setErrorEnabled(false);
     }
 
 
 
     private TokenRequest createToken(String gatewayID) {
         TokenRequest tokenRequest = new TokenRequest();
+        if (mCreditCardEmailRequired) tokenRequest.email = getCreditCardEmail();
+        if (mCreditCardPhoneRequired) tokenRequest.phone = getCreditCardPhone();
+        if (mCreditCardFirstNameRequired) tokenRequest.first_name = getCreditCardFirstName();
+        if (mCreditCardLastNameRequired) tokenRequest.last_name = getCreditCardLastName();
+        if (mCreditCardAddressLine1Required) tokenRequest.address_line1 = getCreditCardAddressLine1();
+        if (mCreditCardAddressLine2Required) tokenRequest.address_line2 = getCreditCardAddressLine2();
+        if (mCreditCardAddressCityRequired) tokenRequest.address_city = getCreditCardAddressCity();
+        if (mCreditCardAddressCountryRequired) tokenRequest.address_country = getCreditCardAddressCountry();
+        if (mCreditCardAddressPostCodeRequired) tokenRequest.address_postcode = getCreditCardAddressPostCode();
         tokenRequest.gateway_id = gatewayID;
         tokenRequest.card_name = getCreditCardName();
         tokenRequest.card_number = getCreditCardNumber();
