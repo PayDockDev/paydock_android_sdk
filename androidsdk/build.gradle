@@ -35,9 +35,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.android.support:design:26.1.0'
-    compile 'com.paydock:javasdk:1.1.0'
+    compile 'com.paydock:javasdk:1.1.1'
     compile 'io.card:android-sdk:5.5.1'
-    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
 }
 tasks.withType(Javadoc).all {
     enabled = false
@@ -58,7 +57,7 @@ ext {
     siteUrl = 'https://www.paydock.com'
     gitUrl = 'https://github.com/PayDockDev/paydock_android_sdk'
 
-    libraryVersion = '1.0.2'
+    libraryVersion = '1.0.3'
 
     developerId = ''
     developerName = 'Mark Cardamis'
