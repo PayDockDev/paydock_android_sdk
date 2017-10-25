@@ -326,6 +326,9 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
         setVisibility(VISIBLE);
     }
 
+    public void hide() {
+        setVisibility(GONE);
+    }
 
     private String getCreditCardName() {
         return etCreditCardName.getText().toString();

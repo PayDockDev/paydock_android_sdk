@@ -62,30 +62,30 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
         mVaultedPaymentSourcesInputForm = findViewById(R.id.vaultedPaymentsSourcesInputForm);
         pbLoadingPanel = findViewById(R.id.pbLoadingPanel);
 
-        //mCreditCardInputForm.setVisibility(View.VISIBLE);
-        mDirectDebitInputForm.setVisibility(View.GONE);
-        mVaultedPaymentSourcesInputForm.setVisibility(View.GONE);
-
         mCreditCardInputForm.setEmail(true)
                             .build();
 
 
         bCreditCard.setOnClickListener(v -> {
-            mCreditCardInputForm.setVisibility(View.VISIBLE);
-            mDirectDebitInputForm.setVisibility(View.GONE);
-            mVaultedPaymentSourcesInputForm.setVisibility(View.GONE);
+            mCreditCardInputForm.build();
+            mDirectDebitInputForm.hide();
+            mVaultedPaymentSourcesInputForm.hide();
         });
 
         bBank.setOnClickListener(v -> {
-            mCreditCardInputForm.setVisibility(View.GONE);
-            mDirectDebitInputForm.setVisibility(View.VISIBLE);
-            mVaultedPaymentSourcesInputForm.setVisibility(View.GONE);
+            mCreditCardInputForm.hide();
+            mDirectDebitInputForm.build();
+            mVaultedPaymentSourcesInputForm.hide();
 
         });
 
         bVault.setOnClickListener(v -> {
-            mCreditCardInputForm.setVisibility(View.GONE);
-            mDirectDebitInputForm.setVisibility(View.GONE);
+            mCreditCardInputForm.hide();
+            mDirectDebitInputForm.hide();
+            mVaultedPaymentSourcesInputForm.build();
+            mVaultedPaymentSourcesInputForm.getVaultedPaymentSources(Environment.Sandbox,
+                    sPublicKey, sQueryString, this);
+
             if (mVaultedPaymentSourcesInputForm.getVisibility() == View.GONE){
                 mVaultedPaymentSourcesInputForm.setVisibility(View.VISIBLE);
                 mVaultedPaymentSourcesInputForm.getVaultedPaymentSources(Environment.Sandbox,

@@ -58,6 +58,8 @@ public class DirectDebitInputForm extends LinearLayout implements IDirectDebitIn
 
     private void init(Context context) {
 
+        setVisibility(GONE); // hide the view until the build command is sent
+
         rootView = inflate(context, R.layout.bank, this);
 
         etDirectDebitName = findViewById(R.id.etDirectDebitName);
@@ -144,6 +146,16 @@ public class DirectDebitInputForm extends LinearLayout implements IDirectDebitIn
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }
+    }
+
+    @Override
+    public void build() {
+        setVisibility(VISIBLE);
+    }
+
+    @Override
+    public void hide() {
+        setVisibility(GONE);
     }
 
 

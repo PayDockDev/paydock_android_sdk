@@ -10,4 +10,6 @@ public interface IDirectDebitInputForm {
                   IGetToken delegateInterface) throws Exception;
     Boolean validate();
     void clear();
+    void build();
+    void hide();
 }
