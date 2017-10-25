@@ -55,6 +55,8 @@ public class VaultedPaymentSourcesInputForm extends LinearLayout implements IVau
 
     private void init(Context context) {
 
+        setVisibility(GONE); // hide the view until the build command is sent
+
         rootView = inflate(context, R.layout.payment_sources, this);
 
         recyclerView = findViewById(R.id.rvPaymentSources);
@@ -81,10 +83,21 @@ public class VaultedPaymentSourcesInputForm extends LinearLayout implements IVau
     }
 
     @Override
-    public void getVaultedPaymentSources(Environment environment, String publicKey,
+    public void build() {
+        setVisibility(VISIBLE);
+    }
+
+    @Override
+    public void hide() {
+        setVisibility(GONE);
+    }
+
+    @Override
+    public VaultedPaymentSourcesInputForm getVaultedPaymentSources(Environment environment, String publicKey,
                                          String queryToken, IPaymentSourceResponse delegateInterface) {
         mQueryToken = queryToken;
         mDelegate = delegateInterface;
+
         mAdapter = new VaultedPaymentSourcesAdapter(tokensList, mDelegate);
         recyclerView.setAdapter(mAdapter);
         pbPaymentSourceLoadingPanel.setVisibility(VISIBLE);
@@ -156,7 +169,10 @@ public class VaultedPaymentSourcesInputForm extends LinearLayout implements IVau
             }
         });
         myTokenTask.execute(token);
+        return this;
     }
+
+
 
 
     private CustomerPaymentSourceSearchRequest mCustomerPaymentSourceSearchRequest() {

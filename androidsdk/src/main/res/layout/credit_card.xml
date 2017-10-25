@@ -23,8 +23,8 @@
 
         <android.support.design.widget.TextInputLayout
             style="@style/btn_text_input_layout"
-            android:layout_weight="1"
             android:id="@+id/etCreditCardNameLayout"
+            android:layout_weight="1"
             android:focusable="false"
             android:labelFor="@+id/etCreditCardName"
             app:errorEnabled="true"
@@ -43,8 +43,8 @@
         </android.support.design.widget.TextInputLayout>
 
         <ImageButton
-            android:id="@+id/bCardIO"
             style="@style/btn_form_icon"
+            android:id="@+id/bCardIO"
             android:scaleType="fitCenter"
             android:src="@android:drawable/ic_menu_camera"
             android:background="#00000000"
@@ -53,13 +53,12 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        style="@style/btn_container_icon">
+    <LinearLayout style="@style/btn_container_icon">
 
         <android.support.design.widget.TextInputLayout
             style="@style/btn_text_input_layout"
-            android:layout_weight="1"
             android:id="@+id/etCreditCardNumberLayout"
+            android:layout_weight="1"
             android:labelFor="@+id/etCreditCardNumber"
             app:errorEnabled="true"
             app:errorTextAppearance="@style/btn_error_layout">
@@ -132,19 +131,20 @@
 
     </LinearLayout>
 
-    <LinearLayout style="@style/btn_container_no_icon">
+    <LinearLayout style="@style/btn_container_no_icon"
+                  android:id="@+id/llCreditCardEmailLayout">
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/etCreditCardEmailLayout"
             style="@style/btn_text_input_layout"
+            android:id="@+id/etCreditCardEmailLayout"
             android:gravity="start"
             android:labelFor="@+id/etCreditCardEmail"
             app:errorEnabled="true"
             app:errorTextAppearance="@style/btn_error_layout">
 
             <EditText
-                android:id="@+id/etCreditCardEmail"
                 style="@style/btn_edit_text_field"
+                android:id="@+id/etCreditCardEmail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:focusable="true"
@@ -159,7 +159,8 @@
 
     </LinearLayout>
 
-    <LinearLayout style="@style/btn_container_no_icon">
+    <LinearLayout style="@style/btn_container_no_icon"
+                  android:id="@+id/llCreditCardPhoneLayout">
 
         <android.support.design.widget.TextInputLayout
             style="@style/btn_text_input_layout"
@@ -185,7 +186,8 @@
 
     </LinearLayout>
 
-    <LinearLayout style="@style/btn_container_no_icon">
+    <LinearLayout style="@style/btn_container_no_icon"
+                  android:id="@+id/llCreditCardFirstNameLayout">
 
         <android.support.design.widget.TextInputLayout
             style="@style/btn_text_input_layout"
@@ -211,7 +213,8 @@
 
     </LinearLayout>
 
-    <LinearLayout style="@style/btn_container_no_icon">
+    <LinearLayout style="@style/btn_container_no_icon"
+                  android:id="@+id/llCreditCardLastNameLayout">
 
         <android.support.design.widget.TextInputLayout
             style="@style/btn_text_input_layout"
@@ -237,7 +240,8 @@
 
     </LinearLayout>
 
-    <LinearLayout style="@style/btn_container_no_icon">
+    <LinearLayout style="@style/btn_container_no_icon"
+                  android:id="@+id/llCreditCardAddressLine1Layout">
 
     <android.support.design.widget.TextInputLayout
         style="@style/btn_text_input_layout"
@@ -263,7 +267,8 @@
 
 </LinearLayout>
 
-    <LinearLayout style="@style/btn_container_no_icon">
+    <LinearLayout style="@style/btn_container_no_icon"
+                  android:id="@+id/llCreditCardAddressLine2Layout">
 
         <android.support.design.widget.TextInputLayout
             style="@style/btn_text_input_layout"
@@ -289,7 +294,8 @@
 
     </LinearLayout>
 
-    <LinearLayout style="@style/btn_container_no_icon">
+    <LinearLayout style="@style/btn_container_no_icon"
+                  android:id="@+id/llCreditCardAddressCityLayout">
 
         <android.support.design.widget.TextInputLayout
             style="@style/btn_text_input_layout"
@@ -315,7 +321,8 @@
 
     </LinearLayout>
 
-    <LinearLayout style="@style/btn_container_no_icon">
+    <LinearLayout style="@style/btn_container_no_icon"
+                  android:id="@+id/llCreditCardAddressCountryLayout">
 
         <android.support.design.widget.TextInputLayout
             style="@style/btn_text_input_layout"
@@ -341,7 +348,8 @@
 
     </LinearLayout>
 
-    <LinearLayout style="@style/btn_container_no_icon">
+    <LinearLayout style="@style/btn_container_no_icon"
+                  android:id="@+id/llCreditCardAddressPostCodeLayout">
 
         <android.support.design.widget.TextInputLayout
             style="@style/btn_text_input_layout"

@@ -62,9 +62,16 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
         mVaultedPaymentSourcesInputForm = findViewById(R.id.vaultedPaymentsSourcesInputForm);
         pbLoadingPanel = findViewById(R.id.pbLoadingPanel);
 
-        mCreditCardInputForm.setEmail(true)
-                            .build();
-
+        mCreditCardInputForm.setEmail(false)
+                .setPhone(true)
+                .setFirstName(true)
+                .setLastName(true)
+                .setAddressLine1(true)
+                .setAddressLine2(true)
+                .setCity(true)
+                .setCountry(true)
+                .setPostCode(true)
+                .build();
 
         bCreditCard.setOnClickListener(v -> {
             mCreditCardInputForm.build();
@@ -82,15 +89,10 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
         bVault.setOnClickListener(v -> {
             mCreditCardInputForm.hide();
             mDirectDebitInputForm.hide();
-            mVaultedPaymentSourcesInputForm.build();
             mVaultedPaymentSourcesInputForm.getVaultedPaymentSources(Environment.Sandbox,
-                    sPublicKey, sQueryString, this);
+                    sPublicKey, sQueryString, this)
+                    .build();
 
-            if (mVaultedPaymentSourcesInputForm.getVisibility() == View.GONE){
-                mVaultedPaymentSourcesInputForm.setVisibility(View.VISIBLE);
-                mVaultedPaymentSourcesInputForm.getVaultedPaymentSources(Environment.Sandbox,
-                        sPublicKey, sQueryString, this);
-            }
         });
 
 

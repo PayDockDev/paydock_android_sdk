@@ -71,6 +71,15 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
     private TextInputLayout etCreditCardAddressCityLayout;
     private TextInputLayout etCreditCardAddressCountryLayout;
     private TextInputLayout etCreditCardAddressPostCodeLayout;
+    private LinearLayout llCreditCardEmailLayout;
+    private LinearLayout llCreditCardPhoneLayout;
+    private LinearLayout llCreditCardFirstNameLayout;
+    private LinearLayout llCreditCardLastNameLayout;
+    private LinearLayout llCreditCardAddressLine1Layout;
+    private LinearLayout llCreditCardAddressLine2Layout;
+    private LinearLayout llCreditCardAddressCityLayout;
+    private LinearLayout llCreditCardAddressCountryLayout;
+    private LinearLayout llCreditCardAddressPostCodeLayout;
     private Resources mResources;
     private ImageView ivCreditCardIcons;
     private ImageButton bCardIO;
@@ -137,6 +146,15 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
         etCreditCardAddressCityLayout = findViewById(R.id.etCreditCardAddressCityLayout);
         etCreditCardAddressCountryLayout = findViewById(R.id.etCreditCardAddressCountryLayout);
         etCreditCardAddressPostCodeLayout = findViewById(R.id.etCreditCardAddressPostCodeLayout);
+        llCreditCardEmailLayout = findViewById(R.id.llCreditCardEmailLayout);
+        llCreditCardPhoneLayout = findViewById(R.id.llCreditCardPhoneLayout);
+        llCreditCardFirstNameLayout = findViewById(R.id.llCreditCardFirstNameLayout);
+        llCreditCardLastNameLayout = findViewById(R.id.llCreditCardLastNameLayout);
+        llCreditCardAddressLine1Layout = findViewById(R.id.llCreditCardAddressLine1Layout);
+        llCreditCardAddressLine2Layout = findViewById(R.id.llCreditCardAddressLine2Layout);
+        llCreditCardAddressCityLayout = findViewById(R.id.llCreditCardAddressCityLayout);
+        llCreditCardAddressCountryLayout = findViewById(R.id.llCreditCardAddressCountryLayout);
+        llCreditCardAddressPostCodeLayout = findViewById(R.id.llCreditCardAddressPostCodeLayout);
         pbCreditCardLoadingPanel = findViewById(R.id.pbCreditCardLoadingPanel);
         bCardIO = findViewById(R.id.bCardIO);
 
@@ -314,15 +332,15 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
     }
 
     public void build() {
-        etCreditCardEmailLayout.setVisibility(mCreditCardEmailRequired ? VISIBLE : GONE );
-        etCreditCardPhoneLayout.setVisibility(mCreditCardPhoneRequired ? VISIBLE : GONE );
-        etCreditCardFirstNameLayout.setVisibility(mCreditCardFirstNameRequired ? VISIBLE : GONE );
-        etCreditCardLastNameLayout.setVisibility(mCreditCardLastNameRequired ? VISIBLE : GONE );
-        etCreditCardAddressLine1Layout.setVisibility(mCreditCardAddressLine1Required ? VISIBLE : GONE );
-        etCreditCardAddressLine2Layout.setVisibility(mCreditCardAddressLine2Required ? VISIBLE : GONE );
-        etCreditCardAddressCityLayout.setVisibility(mCreditCardAddressCityRequired ? VISIBLE : GONE );
-        etCreditCardAddressCountryLayout.setVisibility(mCreditCardAddressCountryRequired ? VISIBLE : GONE );
-        etCreditCardAddressPostCodeLayout.setVisibility(mCreditCardAddressPostCodeRequired ? VISIBLE : GONE );
+        llCreditCardEmailLayout.setVisibility(mCreditCardEmailRequired ? VISIBLE : GONE );
+        llCreditCardPhoneLayout.setVisibility(mCreditCardPhoneRequired ? VISIBLE : GONE );
+        llCreditCardFirstNameLayout.setVisibility(mCreditCardFirstNameRequired ? VISIBLE : GONE );
+        llCreditCardLastNameLayout.setVisibility(mCreditCardLastNameRequired ? VISIBLE : GONE );
+        llCreditCardAddressLine1Layout.setVisibility(mCreditCardAddressLine1Required ? VISIBLE : GONE );
+        llCreditCardAddressLine2Layout.setVisibility(mCreditCardAddressLine2Required ? VISIBLE : GONE );
+        llCreditCardAddressCityLayout.setVisibility(mCreditCardAddressCityRequired ? VISIBLE : GONE );
+        llCreditCardAddressCountryLayout.setVisibility(mCreditCardAddressCountryRequired ? VISIBLE : GONE );
+        llCreditCardAddressPostCodeLayout.setVisibility(mCreditCardAddressPostCodeRequired ? VISIBLE : GONE );
         setVisibility(VISIBLE);
     }
 
