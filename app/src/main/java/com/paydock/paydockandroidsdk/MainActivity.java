@@ -62,15 +62,7 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
         mVaultedPaymentSourcesInputForm = findViewById(R.id.vaultedPaymentsSourcesInputForm);
         pbLoadingPanel = findViewById(R.id.pbLoadingPanel);
 
-        mCreditCardInputForm.setEmail(false)
-                .setPhone(true)
-                .setFirstName(true)
-                .setLastName(true)
-                .setAddressLine1(true)
-                .setAddressLine2(true)
-                .setCity(true)
-                .setCountry(true)
-                .setPostCode(true)
+        mCreditCardInputForm.setEmail(true)
                 .build();
 
         bCreditCard.setOnClickListener(v -> {
