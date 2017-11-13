@@ -71,4 +71,9 @@
         <item name="android:paddingLeft">@dimen/btn_margin</item>
     </style>
 
+    <style name="btn_external_checkout_buttons">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
 </resources>
