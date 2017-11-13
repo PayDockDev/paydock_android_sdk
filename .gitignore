@@ -8,3 +8,5 @@
 /captures
 .externalNativeBuild
 libs/
+
+/app/src/main/java/com/paydock/paydockandroidsdk/PayDock.java

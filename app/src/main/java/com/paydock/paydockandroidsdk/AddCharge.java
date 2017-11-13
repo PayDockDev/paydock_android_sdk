@@ -32,7 +32,7 @@ class AddCharge extends AsyncTask<ChargeRequest, Void, ChargeResponse>{
     protected ChargeResponse doInBackground(ChargeRequest... arg0) {
           ChargeResponse ch = new ChargeResponse();
             try {
-                Config.initialise(Environment.Sandbox, MainActivity.sPrivateKey, MainActivity.sPublicKey);
+                Config.initialise(Environment.Sandbox, PayDock.sPrivateKey, PayDock.sPublicKey);
                 ch =  new Charges().add(arg0[0]);
             } catch (ResponseException er){
                 //handle Paydock exception

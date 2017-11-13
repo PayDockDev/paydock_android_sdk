@@ -25,15 +25,6 @@ import java.math.BigDecimal;
 
 public class MainActivity extends Activity implements IGetToken, IPaymentSourceResponse {
 
-    public static final String sPublicKey = "8b2dad5fcf18f6f504685a46af0df82216781f3b";
-    public static final String sPrivateKey = "c3de8f40ebbfff0fb74c11154274c080dfb8e3f9";
-    public static final String sCreditCardGatewayID = "58dba2dc5219634f922f79c3";
-    public static final String sBankGatewayID = "58bf7dd43c541b5b87f741df";
-    public static final String sQueryString = "eyJhbGciOiJIUzI1NiIsInR5cC" +
-            "I6IkpXVCJ9.eyJpZCI6IjU4YjY0Y2UzNmRhN2U0MjVkNmU0ZjcwNSIsImxpbWl" +
-            "0IjpudWxsLCJza2lwIjpudWxsLCJpYXQiOjE1MDMzMTg2NzV9.U6ziYMwuviOWY" +
-            "vAtp_16dwE4HDXRGVOOvdkUnhtEALE";
-
     Button bCreditCard, bBank, bVault, bAddCharge;
 
     CreditCardInputForm mCreditCardInputForm;
@@ -82,7 +73,7 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
             mCreditCardInputForm.hide();
             mDirectDebitInputForm.hide();
             mVaultedPaymentSourcesInputForm.getVaultedPaymentSources(Environment.Sandbox,
-                    sPublicKey, sQueryString, this)
+                    PayDock.sPublicKey, PayDock.sQueryString, this)
                     .build();
 
         });
@@ -96,11 +87,11 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
                 }
                 if (mCreditCardInputForm.getVisibility() == View.VISIBLE) {
                     pbLoadingPanel.setVisibility(View.VISIBLE);
-                    mCreditCardInputForm.getToken(Environment.Sandbox, sPublicKey, sCreditCardGatewayID, this);
+                    mCreditCardInputForm.getToken(Environment.Sandbox, PayDock.sPublicKey, PayDock.sCreditCardGatewayID, this);
                 } else if (mDirectDebitInputForm.getVisibility() == View.VISIBLE) {
                     pbLoadingPanel.setVisibility(View.VISIBLE);
                     mDirectDebitInputForm.getToken(Environment.Sandbox,
-                            sPublicKey, sBankGatewayID, this);
+                            PayDock.sPublicKey, PayDock.sBankGatewayID, this);
                 } else if (mVaultedPaymentSourcesInputForm.getVisibility() == View.VISIBLE){
                     pbLoadingPanel.setVisibility(View.VISIBLE);
                     new AddCharge(this::displayPopup).execute(createCharge());
