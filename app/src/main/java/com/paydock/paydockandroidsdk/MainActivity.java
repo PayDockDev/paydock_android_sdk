@@ -54,6 +54,7 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
         pbLoadingPanel = findViewById(R.id.pbLoadingPanel);
 
         mCreditCardInputForm.setEmail(true)
+                .setCardScan(true)
                 .build();
 
         bCreditCard.setOnClickListener(v -> {

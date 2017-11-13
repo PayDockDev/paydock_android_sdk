@@ -96,6 +96,7 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
     private boolean mCreditCardAddressCityRequired = false;
     private boolean mCreditCardAddressCountryRequired = false;
     private boolean mCreditCardAddressPostCodeRequired = false;
+    private boolean mCreditCardScanRequired = true;
 
 
     public CreditCardInputForm(Context context) {
@@ -331,6 +332,11 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
         return this;
     }
 
+    public CreditCardInputForm setCardScan(boolean optionalField) {
+        mCreditCardScanRequired = optionalField;
+        return this;
+    }
+
     public void build() {
         llCreditCardEmailLayout.setVisibility(mCreditCardEmailRequired ? VISIBLE : GONE );
         llCreditCardPhoneLayout.setVisibility(mCreditCardPhoneRequired ? VISIBLE : GONE );
@@ -341,6 +347,7 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
         llCreditCardAddressCityLayout.setVisibility(mCreditCardAddressCityRequired ? VISIBLE : GONE );
         llCreditCardAddressCountryLayout.setVisibility(mCreditCardAddressCountryRequired ? VISIBLE : GONE );
         llCreditCardAddressPostCodeLayout.setVisibility(mCreditCardAddressPostCodeRequired ? VISIBLE : GONE );
+        bCardIO.setVisibility(mCreditCardScanRequired ? VISIBLE : INVISIBLE);
         setVisibility(VISIBLE);
     }
 
