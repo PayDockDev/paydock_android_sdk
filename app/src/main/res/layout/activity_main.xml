@@ -37,21 +37,21 @@
             android:textSize="14sp"/>
 
         <Button
-            android:id="@+id/bBank"
+            android:id="@+id/bVault"
             android:layout_width="113dp"
             android:layout_height="45dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:text="@string/bank"
+            android:text="@string/vault"
             android:textSize="14sp"/>
 
         <Button
-            android:id="@+id/bVault"
+            android:id="@+id/bZipMoney"
             android:layout_width="113dp"
             android:layout_height="45dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:text="@string/vault"
+            android:text="@string/zipmoney"
             android:textSize="14sp"/>
 
     </RelativeLayout>
@@ -74,6 +74,14 @@
 
     <com.paydock.androidsdk.View.VaultedPaymentSourcesInputForm
         android:id="@+id/vaultedPaymentsSourcesInputForm"
+        android:layout_width="@dimen/input_layout_width"
+        android:layout_height="@dimen/input_layout_height"
+        android:layout_marginLeft="@dimen/input_layout_horizontal_margin"
+        android:layout_marginRight="@dimen/input_layout_horizontal_margin"
+        android:visibility="gone"/>
+
+    <com.paydock.androidsdk.View.ZipMoneyInputForm
+        android:id="@+id/zipMoneyInputForm"
         android:layout_width="@dimen/input_layout_width"
         android:layout_height="@dimen/input_layout_height"
         android:layout_marginLeft="@dimen/input_layout_horizontal_margin"

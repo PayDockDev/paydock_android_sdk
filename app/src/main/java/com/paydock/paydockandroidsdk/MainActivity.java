@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.paydock.androidsdk.IGetCheckoutLink;
 import com.paydock.androidsdk.IGetToken;
 import com.paydock.androidsdk.IPaymentSourceResponse;
 import com.paydock.androidsdk.Models.PaymentSourceResponse;
@@ -16,20 +17,24 @@ import com.paydock.androidsdk.Models.TokenCardResponse;
 import com.paydock.androidsdk.View.CreditCardInputForm;
 import com.paydock.androidsdk.View.DirectDebitInputForm;
 import com.paydock.androidsdk.View.VaultedPaymentSourcesInputForm;
+import com.paydock.androidsdk.View.ZipMoneyInputForm;
 import com.paydock.javasdk.Models.ChargeRequest;
 import com.paydock.javasdk.Models.ChargeResponse;
+import com.paydock.javasdk.Models.ExternalCheckoutResponse;
 import com.paydock.javasdk.Models.ResponseException;
 import com.paydock.javasdk.Services.Environment;
 
 import java.math.BigDecimal;
 
-public class MainActivity extends Activity implements IGetToken, IPaymentSourceResponse {
+public class MainActivity extends Activity implements IGetToken, IPaymentSourceResponse, IGetCheckoutLink {
 
     Button bCreditCard, bBank, bVault, bAddCharge;
+    Button bZipMoney;
 
     CreditCardInputForm mCreditCardInputForm;
     DirectDebitInputForm mDirectDebitInputForm;
     VaultedPaymentSourcesInputForm mVaultedPaymentSourcesInputForm;
+    ZipMoneyInputForm mZipMoneyInputForm;
 
     private RelativeLayout pbLoadingPanel;
 
@@ -45,12 +50,14 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
         setContentView(R.layout.activity_main);
 
         bCreditCard = findViewById(R.id.bCreditCard);
-        bBank = findViewById(R.id.bBank);
+        //bBank = findViewById(R.id.bBank);
         bVault = findViewById(R.id.bVault);
+        bZipMoney = findViewById(R.id.bZipMoney);
         bAddCharge = findViewById(R.id.bAddCharge);
         mCreditCardInputForm = findViewById(R.id.creditCardInputForm);
         mDirectDebitInputForm = findViewById(R.id.directDebitInputForm);
         mVaultedPaymentSourcesInputForm = findViewById(R.id.vaultedPaymentsSourcesInputForm);
+        mZipMoneyInputForm = findViewById(R.id.zipMoneyInputForm);
         pbLoadingPanel = findViewById(R.id.pbLoadingPanel);
 
         mCreditCardInputForm.setEmail(true)
@@ -61,14 +68,15 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
             mCreditCardInputForm.build();
             mDirectDebitInputForm.hide();
             mVaultedPaymentSourcesInputForm.hide();
+            mZipMoneyInputForm.hide();
         });
 
-        bBank.setOnClickListener(v -> {
-            mCreditCardInputForm.hide();
-            mDirectDebitInputForm.build();
-            mVaultedPaymentSourcesInputForm.hide();
-
-        });
+//        bBank.setOnClickListener(v -> {
+//            mCreditCardInputForm.hide();
+//            mDirectDebitInputForm.build();
+//            mVaultedPaymentSourcesInputForm.hide();
+//            mZipMoneyInputForm.hide();
+//        });
 
         bVault.setOnClickListener(v -> {
             mCreditCardInputForm.hide();
@@ -76,6 +84,15 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
             mVaultedPaymentSourcesInputForm.getVaultedPaymentSources(Environment.Sandbox,
                     PayDock.sPublicKey, PayDock.sQueryString, this)
                     .build();
+            mZipMoneyInputForm.hide();
+
+        });
+
+        bZipMoney.setOnClickListener(v -> {
+            mCreditCardInputForm.hide();
+            mDirectDebitInputForm.hide();
+            mVaultedPaymentSourcesInputForm.hide();
+            mZipMoneyInputForm.build();
 
         });
 
@@ -96,6 +113,11 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
                 } else if (mVaultedPaymentSourcesInputForm.getVisibility() == View.VISIBLE){
                     pbLoadingPanel.setVisibility(View.VISIBLE);
                     new AddCharge(this::displayPopup).execute(createCharge());
+                } else if (mZipMoneyInputForm.getVisibility() == View.VISIBLE){
+                    //pbLoadingPanel.setVisibility(View.VISIBLE);
+                    mZipMoneyInputForm.getCheckoutLink(Environment.Sandbox,
+                            PayDock.sPublicKey, PayDock.sZipMoneyID, this);
+
                 }
             } catch (ResponseException er) {
                 // handle local widget validation exception
@@ -105,6 +127,7 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
                 pbLoadingPanel.setVisibility(View.GONE);
             }
         });
+
 
     }
 
@@ -130,6 +153,15 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
         }
     }
 
+    @Override
+    public void checkoutLinkCallback(ExternalCheckoutResponse output) {
+        try {
+            mToken = output.resource.data.link;
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     ChargeRequest createCharge() {
         ChargeRequest charge = new ChargeRequest();
         charge.currency ="AUD";
@@ -147,6 +179,8 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
         return charge;
     }
 
+
+
     void displayPopup(ChargeResponse chargeResponse) {
         pbLoadingPanel.setVisibility(View.GONE);
         if (chargeResponse.resource != null) {
@@ -163,5 +197,6 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
             Toast.makeText(getApplicationContext(), notification, Toast.LENGTH_LONG).show();
         }
     }
+
 
 }

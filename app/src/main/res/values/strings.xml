@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">PayDockAndroidSDK</string>
-    <string name="credit_card">Credit Card</string>
+    <string name="credit_card">Card</string>
     <string name="bank">Bank</string>
     <string name="vault">Vault</string>
+    <string name="zipmoney">ZipMoney</string>
     <string name="charge">Pay Now</string>
 
 </resources>
