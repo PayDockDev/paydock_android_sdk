@@ -9,6 +9,7 @@ public interface IZipMoneyInputForm {
     void getCheckoutLink(Environment environment, String publicKey, String gatewayID,
                   IGetToken delegateInterface) throws Exception;
     void setMeta(ExternalCheckoutRequestZipMoney.Meta zipMeta);
+    Boolean validate();
     void build();
     void hide();
 }
