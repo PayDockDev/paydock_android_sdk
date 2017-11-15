@@ -40,8 +40,7 @@ public class GetZipMoneyCheckoutLink extends AsyncTask<ExternalCheckoutRequestZi
 
         try{
             Config.initialise(mEnvironment, "", mPublicKey);
-            ExternalCheckoutResponse ch =  new ExternalCheckout().create(arg0[0]);
-            mExternalCheckoutResponse = ch;
+            mExternalCheckoutResponse = new ExternalCheckout().create(arg0[0]);
         }catch (ResponseException er){
             //handle Paydock exception
             mExternalCheckoutResponse.error = er.errorResponse;

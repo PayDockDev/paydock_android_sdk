@@ -25,6 +25,7 @@ public class DateHelperTest {
         Assert.assertFalse(DateHelper.isFuture(monthString, yearString));
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Test
     public void convertCardIOFormat() throws Exception {
         Integer monthInt = null;

@@ -53,14 +53,11 @@ public class VaultedPaymentSourcesAdapter extends RecyclerView.Adapter<VaultedPa
         } else {
             holder.mTick.setVisibility(View.GONE);
         }
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSelectedPosition=holder.getAdapterPosition();
-                mDelegate.paymentSourceResponseCallback(mVaultedPaymentsSources.get(mSelectedPosition));
-                notifyDataSetChanged();
+        holder.itemView.setOnClickListener(v -> {
+            mSelectedPosition=holder.getAdapterPosition();
+            mDelegate.paymentSourceResponseCallback(mVaultedPaymentsSources.get(mSelectedPosition));
+            notifyDataSetChanged();
 
-            }
         });
 
         switch (tokenCardResponse.resource.data.type){
@@ -105,6 +102,7 @@ public class VaultedPaymentSourcesAdapter extends RecyclerView.Adapter<VaultedPa
         return mVaultedPaymentsSources.size();
     }
 
+    @SuppressWarnings("SameParameterValue")
     public void setSelectedPosition(int selectedPosition){
         mSelectedPosition = selectedPosition;
     }

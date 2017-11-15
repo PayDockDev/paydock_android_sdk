@@ -101,7 +101,7 @@ public class DirectDebitInputForm extends LinearLayout implements IDirectDebitIn
             }
             @Override
             public void afterTextChanged(Editable s) {
-                addTextSpan(s, spaceIndices, "-"); // span to seperate input text box
+                addTextSpan(s, spaceIndices, "-"); // span to separate input text box
                 if (validateDirectDebitBSBNumber(false)) {
                     etDirectDebitAccountNumber.requestFocus();
                 }

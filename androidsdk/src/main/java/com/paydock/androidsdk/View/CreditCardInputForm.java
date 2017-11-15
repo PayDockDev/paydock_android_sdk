@@ -28,6 +28,8 @@ import com.paydock.javasdk.Models.ResponseException;
 import com.paydock.javasdk.Models.TokenRequest;
 import com.paydock.javasdk.Services.Environment;
 
+import java.util.Objects;
+
 import io.card.payment.CardIOActivity;
 import io.card.payment.CreditCard;
 
@@ -198,7 +200,7 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
             }
             @Override
             public void afterTextChanged(Editable s) {
-                addTextSpan(s, spaceIndices, " "); // span to seperate input text box
+                addTextSpan(s, spaceIndices, " "); // span to separate input text box
                 updateCardType();
                 if (validateCreditCardNumber(false)) {
                     etCreditCardExpiry.requestFocus();
@@ -248,9 +250,7 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
     private void updateCardType() {
         try {
             CardType cardType = CardType.getCreditCardTypeByNumber(getCreditCardNumber());
-            assert cardType != null;
-            if ((mCardType == null) || (mResources.getString(mCardType.getCardScheme()) !=
-                    mResources.getString(cardType.getCardScheme()))){
+            if ((mCardType == null) || (!Objects.equals(mResources.getString(mCardType.getCardScheme()), mResources.getString(cardType.getCardScheme())))){
                 mCardType = cardType;
                 ivCreditCardIcons.setImageResource(mCardType.getImage());
 
