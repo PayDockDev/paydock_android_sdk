@@ -28,7 +28,11 @@ public class GetToken extends AsyncTask<TokenRequest, Void, TokenCardResponse>{
         mEnvironment = environment;
         mDelegate = delegateInterface;
         mPublicKey = publicKey;
-        mTokenCardResponse = tokenCardResponse;
+        if (tokenCardResponse == null) {
+            mTokenCardResponse = new TokenCardResponse();
+        } else {
+            mTokenCardResponse = tokenCardResponse;
+        }
         pbLoadingPanel = relativeLayout;
     }
 

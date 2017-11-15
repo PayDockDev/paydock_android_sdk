@@ -16,18 +16,16 @@ public class GetZipMoneyCheckoutLink extends AsyncTask<ExternalCheckoutRequestZi
     private Environment mEnvironment = Environment.Sandbox;
     private IGetCheckoutLink mDelegate = null;
     private String mPublicKey = "";
-    private ExternalCheckoutResponse mTokenCardResponse;
+    private ExternalCheckoutResponse mExternalCheckoutResponse;
 
     private Exception mException = null;
 
     private RelativeLayout pbLoadingPanel;
 
-    public GetZipMoneyCheckoutLink(Environment environment, String publicKey, IGetCheckoutLink delegateInterface,
-                                   ExternalCheckoutResponse tokenCardResponse, RelativeLayout relativeLayout){
+    public GetZipMoneyCheckoutLink(Environment environment, String publicKey, IGetCheckoutLink delegateInterface, RelativeLayout relativeLayout){
         mEnvironment = environment;
         mDelegate = delegateInterface;
         mPublicKey = publicKey;
-        mTokenCardResponse = tokenCardResponse;
         pbLoadingPanel = relativeLayout;
     }
 
@@ -43,15 +41,15 @@ public class GetZipMoneyCheckoutLink extends AsyncTask<ExternalCheckoutRequestZi
         try{
             Config.initialise(mEnvironment, "", mPublicKey);
             ExternalCheckoutResponse ch =  new ExternalCheckout().create(arg0[0]);
-            mTokenCardResponse = ch;
+            mExternalCheckoutResponse = ch;
         }catch (ResponseException er){
             //handle Paydock exception
-            mTokenCardResponse.error = er.errorResponse;
+            mExternalCheckoutResponse.error = er.errorResponse;
         }catch (Exception e){
-            mTokenCardResponse.error.message = "External Checkout method exception";
-            mTokenCardResponse.error.jsonResponse = e.getMessage();
+            mExternalCheckoutResponse.error.message = "External Checkout method exception";
+            mExternalCheckoutResponse.error.jsonResponse = e.getMessage();
         }
-        return mTokenCardResponse;
+        return mExternalCheckoutResponse;
     }
 
     @Override
