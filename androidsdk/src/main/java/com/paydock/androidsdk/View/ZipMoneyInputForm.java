@@ -109,10 +109,6 @@ public class ZipMoneyInputForm extends LinearLayout implements IZipMoneyInputFor
                                 mCheckoutToken = output.resource.data.token;
                                 myWebView.setVisibility(View.VISIBLE);
                                 myWebView.getSettings().setJavaScriptEnabled(true);
-                                myWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-                                myWebView.getSettings().setLoadsImagesAutomatically(true);
-//                            myWebView.getSettings().setLoadWithOverviewMode(true);
-//                            myWebView.canGoBack();
                                 myWebView.setWebViewClient(new HelloWebViewClient());
                                 myWebView.loadUrl(mLink);
                             }
@@ -145,7 +141,7 @@ public class ZipMoneyInputForm extends LinearLayout implements IZipMoneyInputFor
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (url.contains("https://success.com")){
+            if (url.contains("https://paydock.com")){
                 myWebView.setVisibility(View.GONE);
                 try {
                     TokenRequest token = createToken();
@@ -166,6 +162,34 @@ public class ZipMoneyInputForm extends LinearLayout implements IZipMoneyInputFor
     @Override
     public Boolean validate() {
         boolean isValid = true;
+        try {
+            if (mGatewayID == null) {
+                isValid = false;
+            }
+            if (mZipMeta.first_name == null) {
+                isValid = false;
+            }
+            if (mZipMeta.last_name == null) {
+                isValid = false;
+            }
+            if (mZipMeta.email == null) {
+                isValid = false;
+            }
+            if (mZipMeta.charge.amount == null) {
+                isValid = false;
+            }
+            if (mZipMeta.charge.items == null) {
+                isValid = false;
+            }
+            if (mZipMeta.charge.shipping_address == null) {
+                isValid = false;
+            }
+            if (mZipMeta.charge.billing_address == null) {
+                isValid = false;
+            }
+        } catch (Exception e){
+            isValid = false;
+        }
 
         return isValid;
     }
@@ -181,8 +205,8 @@ public class ZipMoneyInputForm extends LinearLayout implements IZipMoneyInputFor
     private ExternalCheckoutRequestZipMoney createCheckoutRequest() {
         ExternalCheckoutRequestZipMoney request = new ExternalCheckoutRequestZipMoney();
         request.gateway_id = mGatewayID;
-        request.mode = "test";
-        request.redirect_url = "https://success.com";
+        request.mode = (mEnvironment == Environment.Sandbox ? "test" : "live");
+        request.redirect_url = "https://paydock.com";
         if (mZipMeta != null) {
             request.meta = mZipMeta;
         }
