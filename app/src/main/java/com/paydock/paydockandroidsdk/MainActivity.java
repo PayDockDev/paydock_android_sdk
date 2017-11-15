@@ -60,8 +60,6 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
         mZipMoneyInputForm = findViewById(R.id.zipMoneyInputForm);
         pbLoadingPanel = findViewById(R.id.pbLoadingPanel);
 
-        myWebView = findViewById(R.id.webview);
-
         mCreditCardInputForm.setEmail(true)
                 .setCardScan(true)
                 .build();
@@ -159,8 +157,9 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
     ChargeRequest createCharge() {
         ChargeRequest charge = new ChargeRequest();
         charge.currency ="AUD";
-        double random = (Math.random() * 100);
-        charge.amount = BigDecimal.valueOf(random).setScale(0, BigDecimal.ROUND_HALF_UP);
+//        double random = (Math.random() * 100);
+//        charge.amount = BigDecimal.valueOf(random).setScale(0, BigDecimal.ROUND_HALF_UP);
+        charge.amount = new BigDecimal(6);
         charge.reference = "Charge reference";
         charge.description = "Charge description";
         if (mToken != null) {

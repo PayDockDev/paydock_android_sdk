@@ -60,32 +60,28 @@
         android:id="@+id/creditCardInputForm"
         android:layout_width="@dimen/input_layout_width"
         android:layout_height="@dimen/input_layout_height"
-        android:layout_marginLeft="@dimen/input_layout_horizontal_margin"
-        android:layout_marginRight="@dimen/input_layout_horizontal_margin"
+        android:layout_gravity="center_horizontal"
         android:visibility="gone"/>
 
     <com.paydock.androidsdk.View.DirectDebitInputForm
         android:id="@+id/directDebitInputForm"
         android:layout_width="@dimen/input_layout_width"
         android:layout_height="@dimen/input_layout_height"
-        android:layout_marginLeft="@dimen/input_layout_horizontal_margin"
-        android:layout_marginRight="@dimen/input_layout_horizontal_margin"
+        android:layout_gravity="center_horizontal"
         android:visibility="gone"/>
 
     <com.paydock.androidsdk.View.VaultedPaymentSourcesInputForm
         android:id="@+id/vaultedPaymentsSourcesInputForm"
         android:layout_width="@dimen/input_layout_width"
         android:layout_height="@dimen/input_layout_height"
-        android:layout_marginLeft="@dimen/input_layout_horizontal_margin"
-        android:layout_marginRight="@dimen/input_layout_horizontal_margin"
+        android:layout_gravity="center_horizontal"
         android:visibility="gone"/>
 
     <com.paydock.androidsdk.View.ZipMoneyInputForm
         android:id="@+id/zipMoneyInputForm"
-        android:layout_width="@dimen/input_layout_width"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/input_layout_height"
-        android:layout_marginLeft="@dimen/input_layout_horizontal_margin"
-        android:layout_marginRight="@dimen/input_layout_horizontal_margin"
+        android:layout_gravity="center_horizontal"
         android:visibility="gone"/>
 
     <Button

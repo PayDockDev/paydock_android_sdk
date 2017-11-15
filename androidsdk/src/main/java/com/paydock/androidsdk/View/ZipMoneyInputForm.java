@@ -1,5 +1,6 @@
 package com.paydock.androidsdk.View;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.AttributeSet;
@@ -68,9 +69,8 @@ public class ZipMoneyInputForm extends LinearLayout implements IZipMoneyInputFor
 
         rootView = inflate(context, R.layout.zipmoney, this);
         pbZipMoneyLoadingPanel = findViewById(R.id.pbZipMoneyLoadingPanel);
-
         bZipMoney = findViewById(R.id.bZipMoney);
-        myWebView = findViewById(R.id.webview);
+        myWebView = findViewById(R.id.wvWebview);
 
         mResources = getResources();
         
@@ -100,6 +100,7 @@ public class ZipMoneyInputForm extends LinearLayout implements IZipMoneyInputFor
             try {
                 ExternalCheckoutRequestZipMoney token = createCheckoutRequest();
                 GetZipMoneyCheckoutLink myTokenTask = new GetZipMoneyCheckoutLink(mEnvironment, mPublicKey, new IGetCheckoutLink() {
+                    @SuppressLint("SetJavaScriptEnabled")
                     @Override
                     public void checkoutLinkCallback(ExternalCheckoutResponse output) {
                         try {
@@ -109,6 +110,7 @@ public class ZipMoneyInputForm extends LinearLayout implements IZipMoneyInputFor
                                 mCheckoutToken = output.resource.data.token;
                                 myWebView.setVisibility(View.VISIBLE);
                                 myWebView.getSettings().setJavaScriptEnabled(true);
+                                myWebView.getSettings().setLoadWithOverviewMode(true);
                                 myWebView.setWebViewClient(new HelloWebViewClient());
                                 myWebView.loadUrl(mLink);
                             }
@@ -143,6 +145,7 @@ public class ZipMoneyInputForm extends LinearLayout implements IZipMoneyInputFor
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             if (url.contains("https://paydock.com")){
                 myWebView.setVisibility(View.GONE);
+                myWebView.loadUrl("about:blank");
                 try {
                     TokenRequest token = createToken();
                     GetToken myTokenTask = new GetToken(mEnvironment, mPublicKey, mDelegateInterface,
