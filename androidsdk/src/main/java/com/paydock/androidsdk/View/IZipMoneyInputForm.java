@@ -6,9 +6,11 @@ import com.paydock.javasdk.Services.Environment;
 
 public interface IZipMoneyInputForm {
 
-    void getCheckoutLink(Environment environment, String publicKey, String gatewayID,
+    void getCheckoutToken(Environment environment, String publicKey, String gatewayID,
                   IGetToken delegateInterface) throws Exception;
-    void setMeta(ExternalCheckoutRequestZipMoney.Meta zipMeta);
+    ZipMoneyInputForm setPayDock(Environment environment, String publicKey, String gatewayID,
+                    IGetToken delegateInterface);
+    ZipMoneyInputForm setMeta(ExternalCheckoutRequestZipMoney.Meta zipMeta);
     Boolean validate();
     void build();
     void hide();

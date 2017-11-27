@@ -10,7 +10,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.paydock.androidsdk.GetToken;
 import com.paydock.androidsdk.IGetToken;
@@ -37,7 +36,6 @@ public class DirectDebitInputForm extends LinearLayout implements IDirectDebitIn
     private TextInputLayout etDirectDebitAccountNumberLayout;
     private Resources mResources;
 
-    private RelativeLayout pbBankLoadingPanel;
     public TokenCardResponse mTokenCardResponse;
     private String mGatewayID;
     
@@ -68,7 +66,6 @@ public class DirectDebitInputForm extends LinearLayout implements IDirectDebitIn
         etDirectDebitNameLayout = findViewById(R.id.etDirectDebitNameLayout);
         etDirectDebitBSBNumberLayout = findViewById(R.id.etDirectDebitBSBNumberLayout);
         etDirectDebitAccountNumberLayout = findViewById(R.id.etDirectDebitAccountNumberLayout);
-        pbBankLoadingPanel = findViewById(R.id.pbBankLoadingPanel);
 
         mResources = getResources();
         
@@ -218,7 +215,7 @@ public class DirectDebitInputForm extends LinearLayout implements IDirectDebitIn
         if (validate()){
             try {
                 TokenRequest token = createToken();
-                GetToken myTokenTask = new GetToken(environment, publicKey, delegateInterface, mTokenCardResponse, pbBankLoadingPanel);
+                GetToken myTokenTask = new GetToken(environment, publicKey, delegateInterface, mTokenCardResponse);
                 myTokenTask.execute(token);
 
             } catch (Exception e) {

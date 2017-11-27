@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.paydock.androidsdk.GetToken;
 import com.paydock.androidsdk.IGetToken;
@@ -34,7 +33,7 @@ import io.card.payment.CardIOActivity;
 import io.card.payment.CreditCard;
 
 @SuppressWarnings({"Convert2Lambda", "SameParameterValue"})
-public class CreditCardInputForm extends LinearLayout implements ICreditCardInputForm {
+public class CreditCardInputForm extends LinearLayout implements ICreditCardInputForm{
 
     private static final String TAG = "CardInputForm";
 
@@ -86,7 +85,6 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
     private ImageView ivCreditCardIcons;
     private ImageButton bCardIO;
 
-    private RelativeLayout pbCreditCardLoadingPanel;
     public TokenCardResponse mTokenCardResponse;
 
     private boolean mCreditCardEmailRequired = false;
@@ -158,7 +156,6 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
         llCreditCardAddressCityLayout = findViewById(R.id.llCreditCardAddressCityLayout);
         llCreditCardAddressCountryLayout = findViewById(R.id.llCreditCardAddressCountryLayout);
         llCreditCardAddressPostCodeLayout = findViewById(R.id.llCreditCardAddressPostCodeLayout);
-        pbCreditCardLoadingPanel = findViewById(R.id.pbCreditCardLoadingPanel);
         bCardIO = findViewById(R.id.bCardIO);
 
         mResources = getResources();
@@ -592,10 +589,9 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
                          IGetToken delegateInterface) throws Exception {
         if (validate()){
             try {
-                pbCreditCardLoadingPanel.setVisibility(VISIBLE);
                 TokenRequest token = createToken(gatewayID);
                 GetToken myTokenTask = new GetToken(environment, publicKey, delegateInterface,
-                        mTokenCardResponse, pbCreditCardLoadingPanel);
+                        mTokenCardResponse);
                 myTokenTask.execute(token);
 
             } catch (Exception e) {
@@ -787,6 +783,7 @@ public class CreditCardInputForm extends LinearLayout implements ICreditCardInpu
         updateCardType();
         validate();
     }
+
 }
 
 

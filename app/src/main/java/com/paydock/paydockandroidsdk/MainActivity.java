@@ -92,8 +92,9 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
             mCreditCardInputForm.hide();
             mDirectDebitInputForm.hide();
             mVaultedPaymentSourcesInputForm.hide();
-            mZipMoneyInputForm.build();
-            mZipMoneyInputForm.setMeta(createZipMeta());
+            mZipMoneyInputForm.setPayDock(Environment.Sandbox, PayDock.sPublicKey, PayDock.sZipMoneyID, this)
+                              .setMeta(createZipMeta())
+                              .build();
 
         });
 
@@ -116,8 +117,7 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
                     new AddCharge(this::displayPopup).execute(createCharge());
                 } else if (mZipMoneyInputForm.getVisibility() == View.VISIBLE){
                     //pbLoadingPanel.setVisibility(View.VISIBLE);
-                    mZipMoneyInputForm.getCheckoutLink(Environment.Sandbox,
-                            PayDock.sPublicKey, PayDock.sZipMoneyID, this);
+
 
                 }
             } catch (ResponseException er) {

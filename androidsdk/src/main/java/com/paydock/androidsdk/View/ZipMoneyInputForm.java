@@ -2,11 +2,11 @@ package com.paydock.androidsdk.View;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.Resources;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.View;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -16,28 +16,26 @@ import com.paydock.androidsdk.GetZipMoneyCheckoutLink;
 import com.paydock.androidsdk.IGetCheckoutLink;
 import com.paydock.androidsdk.IGetToken;
 import com.paydock.androidsdk.R;
+import com.paydock.androidsdk.WebViewActivity;
 import com.paydock.javasdk.Models.ErrorResponse;
 import com.paydock.javasdk.Models.ExternalCheckoutRequestZipMoney;
 import com.paydock.javasdk.Models.ExternalCheckoutResponse;
 import com.paydock.javasdk.Models.PaymentType;
 import com.paydock.javasdk.Models.ResponseException;
 import com.paydock.javasdk.Models.TokenRequest;
-import com.paydock.javasdk.Models.TokenResponse;
 import com.paydock.javasdk.Services.Environment;
 
 @SuppressWarnings({"Convert2Lambda", "SameParameterValue"})
-public class ZipMoneyInputForm extends LinearLayout implements IZipMoneyInputForm {
+public class ZipMoneyInputForm extends LinearLayout implements IZipMoneyInputForm{
 
     private static final String TAG = "ZipMoneyInputForm";
 
     View rootView;
-
-    private ImageButton bZipMoney;
-    private Resources mResources;
+    private Context mContext;
+    SharedPreferences prefs;
 
     private RelativeLayout pbZipMoneyLoadingPanel;
     public ExternalCheckoutResponse mTokenCardResponse;
-    private WebView myWebView;
     private String mGatewayID;
     private String mLink;
     private String mCheckoutToken;
@@ -45,7 +43,6 @@ public class ZipMoneyInputForm extends LinearLayout implements IZipMoneyInputFor
     private Environment mEnvironment = Environment.Sandbox;
     private String mPublicKey = "";
     private IGetToken mDelegateInterface = null;
-    private TokenResponse mTokenResponse;
     ExternalCheckoutRequestZipMoney.Meta mZipMeta = new ExternalCheckoutRequestZipMoney.Meta();
 
     public ZipMoneyInputForm(Context context) {
@@ -64,18 +61,28 @@ public class ZipMoneyInputForm extends LinearLayout implements IZipMoneyInputFor
     }
 
     private void init(Context context) {
-
         setVisibility(GONE); // hide the view until the build command is sent
 
         rootView = inflate(context, R.layout.zipmoney, this);
         pbZipMoneyLoadingPanel = findViewById(R.id.pbZipMoneyLoadingPanel);
-        bZipMoney = findViewById(R.id.bZipMoney);
-        myWebView = findViewById(R.id.wvWebview);
+        ImageButton bZipMoney = findViewById(R.id.bZipMoney);
 
-        mResources = getResources();
-        
+        mContext = context;
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs.edit().clear().apply();
+
         mTokenCardResponse = new ExternalCheckoutResponse();
 
+        bZipMoney.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    getCheckoutToken(mEnvironment, mPublicKey, mGatewayID, mDelegateInterface);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
@@ -91,7 +98,7 @@ public class ZipMoneyInputForm extends LinearLayout implements IZipMoneyInputFor
 
 
     @Override
-    public void getCheckoutLink(Environment environment, String publicKey, String gatewayID, IGetToken delegateInterface) throws Exception {
+    public void getCheckoutToken(Environment environment, String publicKey, String gatewayID, IGetToken delegateInterface) throws Exception {
         mEnvironment = environment;
         mPublicKey = publicKey;
         mGatewayID = gatewayID;
@@ -108,17 +115,16 @@ public class ZipMoneyInputForm extends LinearLayout implements IZipMoneyInputFor
                             mLink = output.resource.data.link;
                             if (mLink != null) {
                                 mCheckoutToken = output.resource.data.token;
-                                myWebView.setVisibility(View.VISIBLE);
-                                myWebView.getSettings().setJavaScriptEnabled(true);
-                                myWebView.getSettings().setLoadWithOverviewMode(true);
-                                myWebView.setWebViewClient(new HelloWebViewClient());
-                                myWebView.loadUrl(mLink);
+                                Intent intent = new Intent(mContext, WebViewActivity.class);
+                                intent.putExtra("url", mLink);
+                                intent.putExtra("checkoutType", "zipmoney");
+                                mContext.startActivity(intent);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
-                }, pbZipMoneyLoadingPanel);
+                });
                 myTokenTask.execute(token);
 
             } catch (Exception e) {
@@ -134,34 +140,20 @@ public class ZipMoneyInputForm extends LinearLayout implements IZipMoneyInputFor
     }
 
     @Override
-    public void setMeta(ExternalCheckoutRequestZipMoney.Meta zipMeta) {
+    public ZipMoneyInputForm setPayDock(Environment environment, String publicKey, String gatewayID, IGetToken delegateInterface) {
+        mEnvironment = environment;
+        mPublicKey = publicKey;
+        mGatewayID = gatewayID;
+        mDelegateInterface = delegateInterface;
+        return this;
+    }
+
+    @Override
+    public ZipMoneyInputForm setMeta(ExternalCheckoutRequestZipMoney.Meta zipMeta) {
         mZipMeta = zipMeta;
+        return this;
     }
 
-
-    private class HelloWebViewClient extends WebViewClient {
-
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (url.contains("https://paydock.com")){
-                myWebView.setVisibility(View.GONE);
-                myWebView.loadUrl("about:blank");
-                try {
-                    TokenRequest token = createToken();
-                    GetToken myTokenTask = new GetToken(mEnvironment, mPublicKey, mDelegateInterface,
-                            null, pbZipMoneyLoadingPanel);
-                    myTokenTask.execute(token);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return false;
-            } else {
-                view.loadUrl(url);
-                return true;
-            }
-        }
-    }
     @Override
     public Boolean validate() {
         boolean isValid = true;
@@ -193,16 +185,30 @@ public class ZipMoneyInputForm extends LinearLayout implements IZipMoneyInputFor
         } catch (Exception e){
             isValid = false;
         }
-
         return isValid;
     }
+    @Override
+    protected void onWindowVisibilityChanged(int visibility) {
+        super.onWindowVisibilityChanged(visibility);
 
-    private TokenRequest createToken() {
-        TokenRequest tokenRequest = new TokenRequest();
-        tokenRequest.type = PaymentType.checkout_token;
-        tokenRequest.gateway_id = mGatewayID;
-        tokenRequest.checkout_token = mCheckoutToken;
-        return tokenRequest;
+        boolean success = prefs.getBoolean("success", false);
+        if (visibility == 0 && success)
+        {
+            try {
+                TokenRequest tokenRequest = new TokenRequest();
+                tokenRequest.type = PaymentType.checkout_token;
+                tokenRequest.gateway_id = mGatewayID;
+                tokenRequest.checkout_token = mCheckoutToken;
+                pbZipMoneyLoadingPanel.setVisibility(View.VISIBLE);
+                GetToken myTokenTask = new GetToken(mEnvironment, mPublicKey, mDelegateInterface,
+                        null);
+                myTokenTask.execute(tokenRequest);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                pbZipMoneyLoadingPanel.setVisibility(View.GONE);
+            }
+        }
     }
 
     private ExternalCheckoutRequestZipMoney createCheckoutRequest() {
@@ -215,8 +221,6 @@ public class ZipMoneyInputForm extends LinearLayout implements IZipMoneyInputFor
         }
         return request;
     }
-
-
 }
 
 

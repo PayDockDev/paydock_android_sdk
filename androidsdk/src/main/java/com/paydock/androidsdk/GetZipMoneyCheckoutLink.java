@@ -1,8 +1,6 @@
 package com.paydock.androidsdk;
 
 import android.os.AsyncTask;
-import android.view.View;
-import android.widget.RelativeLayout;
 
 import com.paydock.javasdk.Models.ExternalCheckoutRequestZipMoney;
 import com.paydock.javasdk.Models.ExternalCheckoutResponse;
@@ -20,18 +18,14 @@ public class GetZipMoneyCheckoutLink extends AsyncTask<ExternalCheckoutRequestZi
 
     private Exception mException = null;
 
-    private RelativeLayout pbLoadingPanel;
-
-    public GetZipMoneyCheckoutLink(Environment environment, String publicKey, IGetCheckoutLink delegateInterface, RelativeLayout relativeLayout){
+    public GetZipMoneyCheckoutLink(Environment environment, String publicKey, IGetCheckoutLink delegateInterface){
         mEnvironment = environment;
         mDelegate = delegateInterface;
         mPublicKey = publicKey;
-        pbLoadingPanel = relativeLayout;
     }
 
     @Override
     protected void onPreExecute() {
-        pbLoadingPanel.setVisibility(View.VISIBLE);
     }
 
 
@@ -54,7 +48,6 @@ public class GetZipMoneyCheckoutLink extends AsyncTask<ExternalCheckoutRequestZi
     @Override
     protected void onPostExecute(ExternalCheckoutResponse ch) {
         super.onPostExecute(ch);
-        pbLoadingPanel.setVisibility(View.GONE);
         mDelegate.checkoutLinkCallback(ch);
     }
 
