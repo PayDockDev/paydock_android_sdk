@@ -9,7 +9,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.paydock.androidsdk.GetToken;
 import com.paydock.androidsdk.GetZipMoneyCheckoutLink;
@@ -34,7 +33,6 @@ public class ZipMoneyInputForm extends LinearLayout implements IZipMoneyInputFor
     private Context mContext;
     SharedPreferences prefs;
 
-    private RelativeLayout pbZipMoneyLoadingPanel;
     public ExternalCheckoutResponse mTokenCardResponse;
     private String mGatewayID;
     private String mLink;
@@ -64,7 +62,6 @@ public class ZipMoneyInputForm extends LinearLayout implements IZipMoneyInputFor
         setVisibility(GONE); // hide the view until the build command is sent
 
         rootView = inflate(context, R.layout.zipmoney, this);
-        pbZipMoneyLoadingPanel = findViewById(R.id.pbZipMoneyLoadingPanel);
         ImageButton bZipMoney = findViewById(R.id.bZipMoney);
 
         mContext = context;
@@ -199,14 +196,12 @@ public class ZipMoneyInputForm extends LinearLayout implements IZipMoneyInputFor
                 tokenRequest.type = PaymentType.checkout_token;
                 tokenRequest.gateway_id = mGatewayID;
                 tokenRequest.checkout_token = mCheckoutToken;
-                pbZipMoneyLoadingPanel.setVisibility(View.VISIBLE);
                 GetToken myTokenTask = new GetToken(mEnvironment, mPublicKey, mDelegateInterface,
                         null);
                 myTokenTask.execute(tokenRequest);
 
             } catch (Exception e) {
                 e.printStackTrace();
-                pbZipMoneyLoadingPanel.setVisibility(View.GONE);
             }
         }
     }
