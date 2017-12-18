@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion "27.0.1"
+    buildToolsVersion "27.0.2"
 
     defaultConfig {
         minSdkVersion 21
@@ -35,7 +35,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:27.0.2'
     compile 'com.android.support:design:27.0.2'
-    compile 'com.paydock:javasdk:1.1.6'
+    compile 'com.paydock:javasdk:1.1.7'
     compile 'io.card:android-sdk:5.5.1'
 }
 tasks.withType(Javadoc).all {

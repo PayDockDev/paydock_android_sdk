@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -31,7 +30,6 @@ public class MainActivity extends Activity implements IGetToken, IPaymentSourceR
 
     Button bCreditCard, bBank, bVault, bAddCharge;
     Button bZipMoney;
-    WebView myWebView;
 
     CreditCardInputForm mCreditCardInputForm;
     DirectDebitInputForm mDirectDebitInputForm;

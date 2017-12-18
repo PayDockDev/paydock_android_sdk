@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <ImageButton
+        android:id="@+id/bAfterPay"
+        style="@style/btn_external_checkout_buttons"
+        android:src="@drawable/ic_afterpay"
+        tools:ignore="ContentDescription"/>
+
+
+
+</LinearLayout>
