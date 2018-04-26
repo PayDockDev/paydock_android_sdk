@@ -33,10 +33,10 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testImplementation 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:27.0.2'
-    compile 'com.android.support:design:27.0.2'
-    compile 'com.paydock:javasdk:1.1.9'
-    compile 'io.card:android-sdk:5.5.1'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.paydock:javasdk:1.1.9'
+    implementation 'io.card:android-sdk:5.5.1'
 }
 tasks.withType(Javadoc).all {
     enabled = false
